@@ -18,7 +18,7 @@ public class CreateClassroomDialog extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.create_classroom_dialog, container, false);
 
-        EditText editTextClassroomCode = rootView.findViewById(R.id.editText_dialog_new_classroomcode);
+        //EditText editTextClassroomCode = rootView.findViewById(R.id.editText_dialog_new_classroomcode);
         Button cancelButton = rootView.findViewById(R.id.btn_cancel);
         Button addButton = rootView.findViewById(R.id.btn_add);
 
