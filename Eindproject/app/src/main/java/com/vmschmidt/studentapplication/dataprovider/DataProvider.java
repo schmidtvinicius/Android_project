@@ -103,6 +103,13 @@ public class DataProvider {
 //        }
     }
 
+    public static void removeStudent(Student student){
+        String classroomCode = student.getClassroom();
+        Classroom classroom = classrooms.get(classroomCode);
+        classroom.removeStudent(student);
+        studentNumbers.remove(student.getStudentNumber());
+    }
+
     public static Classroom checkExistingClassroom(String codeToCheck){
 
         for(String classroomCode : classrooms.keySet()){

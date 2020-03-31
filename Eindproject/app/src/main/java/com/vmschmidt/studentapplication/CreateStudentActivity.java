@@ -107,7 +107,7 @@ public class CreateStudentActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu, menu);
-        MenuItem addOption = menu.add(Menu.NONE, Menu.NONE, 101, R.string.option_add);
+        MenuItem addOption = menu.add(R.string.option_confirm);
         addOption.setIcon(R.drawable.ic_check);
         addOption.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         addOption.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -137,7 +137,7 @@ public class CreateStudentActivity extends AppCompatActivity {
                 return false;
             }
         });
-        MenuItem cancelOption = menu.add(Menu.NONE, Menu.NONE, 100, R.string.option_cancel);
+        MenuItem cancelOption = menu.add(R.string.option_cancel);
         cancelOption.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         cancelOption.setIcon(R.drawable.ic_clear);
         cancelOption.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {

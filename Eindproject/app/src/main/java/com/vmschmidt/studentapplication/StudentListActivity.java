@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,8 +25,8 @@ public class StudentListActivity extends AppCompatActivity {
     ListView studentListView;
     StudentAdapter studentAdapter;
     public static final String EXTRA_STUDENT = "studentPosition";
-    public static final int VIEW_STUDENT_REQUEST = 10;
-    public static final int ADD_STUDENT_REQUEST = 20;
+    public static final int VIEW_STUDENT_REQUEST = 20;
+    public static final int ADD_STUDENT_REQUEST = 30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,40 +77,44 @@ public class StudentListActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode == StudentListActivity.VIEW_STUDENT_REQUEST && resultCode == RESULT_OK){
+        if(requestCode == StudentListActivity.VIEW_STUDENT_REQUEST){
             int studentIndex = data.getIntExtra(EXTRA_STUDENT, -1);
             Student student = DataProvider.classrooms.get(classroomCode).getStudentList().get(studentIndex);
-            String newFirstName = data.getStringExtra(StudentDetailActivity.EXTRA_FIRSTNAME);
-            String newMiddleName = data.getStringExtra(StudentDetailActivity.EXTRA_MIDDLENAME);
-            String newLastName = data.getStringExtra(StudentDetailActivity.EXTRA_LASTNAME);
-            String newClassroomCode = data.getStringExtra(StudentDetailActivity.EXTRA_CLASSROOM);
+            if(resultCode == RESULT_OK){
+                String newFirstName = data.getStringExtra(StudentDetailActivity.EXTRA_FIRSTNAME);
+                String newMiddleName = data.getStringExtra(StudentDetailActivity.EXTRA_MIDDLENAME);
+                String newLastName = data.getStringExtra(StudentDetailActivity.EXTRA_LASTNAME);
+                String newClassroomCode = data.getStringExtra(StudentDetailActivity.EXTRA_CLASSROOM);
+                if(!newFirstName.equals(student.getFirstName())){
+                    if(newFirstName.length() > 0){
+                        newFirstName = newFirstName.trim();
+                    }
+                    student.setFirstName(newFirstName);
+                }
+                if(!newMiddleName.equals(student.getMiddleName())){
+                    if(newMiddleName.length() > 0){
+                        newMiddleName = newMiddleName.trim();
+                    }
+                    student.setMiddleName(newMiddleName);
+                }
+                if(!newLastName.equals(student.getLastName())){
+                    if(newLastName.length() > 0){
+                        newLastName = newLastName.trim();
+                    }
+                    student.setLastName(newLastName);
+                }
+                if(newClassroomCode.matches("^EHI1V.([BI][ab]|S[a-d])$") && !newClassroomCode.equals(student.getClassroom())){
+                    Classroom newClassroom = DataProvider.checkExistingClassroom(newClassroomCode);
+                    if(newClassroom != null){
+                        DataProvider.classrooms.get(classroomCode).getStudentList().remove(student);
+                        newClassroom.addStudent(student);
+                    }
+                    student.setClassroom(newClassroomCode);
+                }
+            }else if(resultCode == StudentDetailActivity.RESULT_DELETED){
+                DataProvider.removeStudent(student);
+            }
 
-            if(!newFirstName.equals(student.getFirstName())){
-                if(newFirstName.length() > 0){
-                    newFirstName = newFirstName.trim();
-                }
-                student.setFirstName(newFirstName);
-            }
-            if(!newMiddleName.equals(student.getMiddleName())){
-                if(newMiddleName.length() > 0){
-                    newMiddleName = newMiddleName.trim();
-                }
-                student.setMiddleName(newMiddleName);
-            }
-            if(!newLastName.equals(student.getLastName())){
-                if(newLastName.length() > 0){
-                    newLastName = newLastName.trim();
-                }
-                student.setLastName(newLastName);
-            }
-            if(newClassroomCode.matches("^EHI1V.([BI][ab]|S[a-d])$") && !newClassroomCode.equals(student.getClassroom())){
-                Classroom newClassroom = DataProvider.checkExistingClassroom(newClassroomCode);
-                if(newClassroom != null){
-                    DataProvider.classrooms.get(classroomCode).getStudentList().remove(student);
-                    newClassroom.addStudent(student);
-                }
-                student.setClassroom(newClassroomCode);
-            }
         }else if(requestCode == StudentListActivity.ADD_STUDENT_REQUEST && resultCode == RESULT_OK){
             String firstName = data.getStringExtra(CreateStudentActivity.EXTRA_FIRSTNAME);
             String middleName = data.getStringExtra(CreateStudentActivity.EXTRA_MIDDLENAME);

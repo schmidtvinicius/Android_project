@@ -31,7 +31,6 @@ public class Classroom {
 
     public void removeStudent(Student student){
         studentList.remove(student);
-        DataProvider.studentNumbers.remove(student.getStudentNumber());
     }
 
     public int totalStudents(){

@@ -15,6 +15,8 @@
     <string name="toast_cannot_alter_class">The student can only be added to the current classroom!</string>
     <string name="toast_cannot_edit_email">The email address is generated based on the student number!</string>
     <string name="toast_invalid_studentnumber">The given student number is not valid or already exists!</string>
-    <string name="toast_missing_name">The student has to have at least a first name to be created!</string>
+    <string name="toast_missing_name">The student has to have a first name to be created!</string>
     <string name="option_cancel">Cancel</string>
+    <string name="option_confirm">Confirm</string>
+    <string name="create_classroom">Insert the new classroom code:</string>
 </resources>
