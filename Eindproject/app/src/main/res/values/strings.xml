@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Student Application</string>
+    <string name="hint_firstname">First name</string>
+    <string name="hint_middlename">Middle name</string>
+    <string name="hint_lastname">Last name</string>
+    <string name="hint_email">E-mail address</string>
+    <string name="hint_classroomcode">Classroom code</string>
+    <string name="hint_studentnumber">Student number</string>
+    <string name="toast_unique_student_value">This is an unique data for this student and cannot be altered!</string>
+    <string name="toast_classroom_invalid">The classroom code is not valid and will not be changed!</string>
+    <string name="option_delete">Delete</string>
+    <string name="option_add">Add</string>
+    <string name="option_search">Search</string>
+    <string name="option_mail">Send email</string>
+    <string name="toast_cannot_alter_class">The student can only be added to the current classroom!</string>
+    <string name="toast_cannot_edit_email">The email address is generated based on the student number!</string>
+    <string name="toast_invalid_studentnumber">The given student number is not valid or already exists!</string>
+    <string name="toast_missing_name">The student has to have at least a first name to be created!</string>
+    <string name="option_cancel">Cancel</string>
+</resources>
