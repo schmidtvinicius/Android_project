@@ -103,6 +103,10 @@ public class DataProvider {
 //        }
     }
 
+    public static void removeClassroom(String classroomCode){
+        classrooms.remove(classroomCode);
+    }
+
     public static void removeStudent(Student student){
         String classroomCode = student.getClassroom();
         Classroom classroom = classrooms.get(classroomCode);

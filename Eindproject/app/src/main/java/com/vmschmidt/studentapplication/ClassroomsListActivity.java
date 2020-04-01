@@ -7,61 +7,39 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toolbar;
 
+import com.vmschmidt.studentapplication.classroom.Classroom;
 import com.vmschmidt.studentapplication.dataprovider.DataProvider;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Set;
 
-public class ClassroomsListActivity extends AppCompatActivity {
+public class ClassroomsListActivity extends AppCompatActivity implements CreateClassroomDialog.CreateClassroomListener {
+
+    private String currentRegex;
+    private ArrayAdapter<String> adapter;
+    private ArrayList<String> classroomCodes;
 
     public static final int VIEW_CLASSROOM_REQUEST = 10;
     public static final String EXTRA_CLASSROOM = "classroomCode";
-    private Set<String> keys = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.classroms_list_activity);
 
-        keys = DataProvider.getKeys(this);
+        currentRegex = getIntent().getStringExtra(MainActivity.EXTRA_REGEX);
 
-        String course = getIntent().getStringExtra(MainActivity.EXTRA_COURSE);
-        final ArrayList<String> classroomCodes = new ArrayList<String>();
-
-        if(course.equalsIgnoreCase(MainActivity.COURSE_SOFTWARE_ENGINEERING)){
-            for(String classroomCode : keys){
-                if(classroomCode.matches("^EHI1V.S[a-z]$")){
-                    classroomCodes.add(classroomCode);
-                    Log.d("ADDED CODE", "Added " + classroomCode);
-                }
-            }
-        }else if(course.equalsIgnoreCase(MainActivity.COURSE_BUSINESS)){
-            for(String classroomCode : keys){
-                if(classroomCode.matches("^EHI1V.B[a-z]$")){
-                    classroomCodes.add(classroomCode);
-                    Log.d("ADDED CODE", "Added " + classroomCode);
-                }
-            }
-        }else{
-            for(String classroomCode : keys){
-                if(classroomCode.matches("^EHI1V.I[a-z]$")){
-                    classroomCodes.add(classroomCode);
-                    Log.d("ADDED CODE", "Added " + classroomCode);
-                }
-            }
-        }
+        updateCurrentClassrooms();
 
         ListView classroomListView = findViewById(R.id.classroms_list);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, classroomCodes);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, classroomCodes);
         classroomListView.setAdapter(adapter);
 
         classroomListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -77,6 +55,22 @@ public class ClassroomsListActivity extends AppCompatActivity {
         });
     }
 
+    private void updateCurrentClassrooms(){
+        if(classroomCodes == null){
+            classroomCodes = new ArrayList<>();
+        }
+        Set<String> keys = DataProvider.getKeys(this);
+        Log.d("TOTALKEYS", String.valueOf(keys.size()));
+        classroomCodes.clear();
+        for(String classroomCode : keys){
+            if(classroomCode.matches(currentRegex)){
+                classroomCodes.add(classroomCode);
+                Log.d("ADDED CODE", "Added " + classroomCode);
+            }
+        }
+        Collections.sort(classroomCodes);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu, menu);
@@ -84,7 +78,7 @@ public class ClassroomsListActivity extends AppCompatActivity {
         addOption.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                CreateClassroomDialog dialog = new CreateClassroomDialog();
+                CreateClassroomDialog dialog = CreateClassroomDialog.newInstance(classroomCodes,currentRegex);
                 dialog.show(getSupportFragmentManager(), "BLA");
                 return false;
             }
@@ -94,6 +88,22 @@ public class ClassroomsListActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == VIEW_CLASSROOM_REQUEST) {
+            if (resultCode == StudentListActivity.RESULT_DELETED) {
+                String classroomToDelete = data.getStringExtra(EXTRA_CLASSROOM);
+                DataProvider.removeClassroom(classroomToDelete);
+                updateCurrentClassrooms();
+                adapter.notifyDataSetChanged();
+            }
+        }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onCreateClassroomComplete(String newClassroomCode) {
+        Classroom newClassroom = new Classroom(newClassroomCode);
+        DataProvider.classrooms.put(newClassroomCode, newClassroom);
+        updateCurrentClassrooms();
+        adapter.notifyDataSetChanged();
     }
 }

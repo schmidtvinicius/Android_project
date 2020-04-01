@@ -29,7 +29,6 @@ public class StudentDetailActivity extends AppCompatActivity {
     public static final String EXTRA_MIDDLENAME = "middlename";
     public static final String EXTRA_LASTNAME = "lastname";
     public static final String EXTRA_CLASSROOM = "classroon";
-    public static final int RESULT_DELETED = -2;
 
     Intent startIntent;
     Intent resultIntent;
@@ -140,7 +139,7 @@ public class StudentDetailActivity extends AppCompatActivity {
         deleteOption.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                resultCode = RESULT_DELETED;
+                resultCode = StudentListActivity.RESULT_DELETED;
                 onBackPressed();
                 return false;
             }

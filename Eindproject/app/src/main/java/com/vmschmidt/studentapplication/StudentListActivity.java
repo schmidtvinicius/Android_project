@@ -19,12 +19,15 @@ import com.vmschmidt.studentapplication.student.StudentAdapter;
 
 import java.util.Iterator;
 
-public class StudentListActivity extends AppCompatActivity {
+public class StudentListActivity extends AppCompatActivity implements AlertDialogFragment.AlertDialogListener {
 
-    String classroomCode;
-    ListView studentListView;
-    StudentAdapter studentAdapter;
+    private String classroomCode;
+    private ListView studentListView;
+    private StudentAdapter studentAdapter;
+    private int resultCode;
+
     public static final String EXTRA_STUDENT = "studentPosition";
+    public static final int RESULT_DELETED = -2;
     public static final int VIEW_STUDENT_REQUEST = 20;
     public static final int ADD_STUDENT_REQUEST = 30;
 
@@ -59,6 +62,8 @@ public class StudentListActivity extends AppCompatActivity {
         deleteOption.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                AlertDialogFragment dialogFragment = new AlertDialogFragment();
+                dialogFragment.show(getSupportFragmentManager(), "ALERT");
                 return false;
             }
         });
@@ -111,7 +116,7 @@ public class StudentListActivity extends AppCompatActivity {
                     }
                     student.setClassroom(newClassroomCode);
                 }
-            }else if(resultCode == StudentDetailActivity.RESULT_DELETED){
+            }else if(resultCode == RESULT_DELETED){
                 DataProvider.removeStudent(student);
             }
 
@@ -126,5 +131,23 @@ public class StudentListActivity extends AppCompatActivity {
         }
         studentAdapter.notifyDataSetChanged();
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent resultIntent = new Intent();
+        setResult(resultCode, resultIntent);
+        resultIntent.putExtra(ClassroomsListActivity.EXTRA_CLASSROOM, classroomCode);
+        super.onBackPressed();
+    }
+
+    @Override
+    public void onAlertDialogComplete(boolean isDeleted) {
+        if(isDeleted){
+            resultCode = RESULT_DELETED;
+        }else{
+            resultCode = RESULT_CANCELED;
+        }
+        onBackPressed();
     }
 }
