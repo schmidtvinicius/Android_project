@@ -1,6 +1,7 @@
 package com.vmschmidt.studentapplication;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -23,15 +25,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.vmschmidt.studentapplication.dataprovider.DataProvider;
 import com.vmschmidt.studentapplication.student.Student;
 
-public class StudentDetailActivity extends AppCompatActivity {
+public class StudentDetailActivity extends AppCompatActivity  {
 
     public static final String EXTRA_FIRSTNAME = "firstname";
     public static final String EXTRA_MIDDLENAME = "middlename";
     public static final String EXTRA_LASTNAME = "lastname";
     public static final String EXTRA_CLASSROOM = "classroon";
+    public static final String EXTRA_FRIENDS_LIST = "friendslist";
+
+    public static final int ADD_FRIEND_REQUEST = 40;
 
     Intent startIntent;
-    Intent resultIntent;
 
     private int resultCode;
 
@@ -61,8 +65,6 @@ public class StudentDetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        resultIntent = new Intent();
 
         startIntent = getIntent();
         classroomCode = startIntent.getStringExtra(ClassroomsListActivity.EXTRA_CLASSROOM);
@@ -120,6 +122,18 @@ public class StudentDetailActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == ADD_FRIEND_REQUEST){
+            if(resultCode == AllStudentsListActivity.RESULT_FRIEND_ADDED){
+                int studentNumberToAdd = data.getIntExtra(StudentListActivity.EXTRA_STUDENT, -1);
+                Student friendToAdd = DataProvider.findStudent(studentNumberToAdd);
+                student.addFriend(friendToAdd);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu, menu);
         int orientation = this.getResources().getConfiguration().orientation;
@@ -165,11 +179,22 @@ public class StudentDetailActivity extends AppCompatActivity {
                 return false;
             }
         });
+        MenuItem addFriend = menu.add(R.string.option_add_friend);
+        addFriend.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent addFriendIntent = new Intent(StudentDetailActivity.this, AllStudentsListActivity.class);
+                addFriendIntent.putExtra(StudentListActivity.EXTRA_STUDENT, studentIndex);
+                startActivityForResult(addFriendIntent, ADD_FRIEND_REQUEST);
+                return false;
+            }
+        });
         return true;
     }
 
     @Override
     public void onBackPressed() {
+        Intent resultIntent = new Intent();
         if(resultCode == RESULT_OK){
             resultIntent.putExtra(EXTRA_FIRSTNAME, editTextFirstName.getText().toString().trim());
             resultIntent.putExtra(EXTRA_MIDDLENAME, editTextMiddleName.getText().toString().trim());
@@ -180,4 +205,5 @@ public class StudentDetailActivity extends AppCompatActivity {
         setResult(resultCode, resultIntent);
         super.onBackPressed();
     }
+
 }

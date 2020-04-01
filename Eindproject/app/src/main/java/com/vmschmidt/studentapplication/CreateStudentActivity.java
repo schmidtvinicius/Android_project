@@ -72,7 +72,7 @@ public class CreateStudentActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.length() > 0){
-                    if(!s.toString().trim().matches("^[0-9]{6}$") || DataProvider.studentNumbers.contains(Integer.parseInt(s.toString().trim()))){
+                    if(!s.toString().trim().matches("^[0-9]{6}$") || DataProvider.studentNumbers.containsKey(Integer.parseInt(s.toString().trim()))){
                         editTextStudentNumber.setTextColor(Color.RED);
                     }else{
                         editTextStudentNumber.setTextColor(Color.BLACK);

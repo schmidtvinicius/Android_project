@@ -1,15 +1,19 @@
 package com.vmschmidt.studentapplication.classroom;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import com.vmschmidt.studentapplication.dataprovider.DataProvider;
 import com.vmschmidt.studentapplication.student.Student;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Classroom {
+public class Classroom implements Parcelable {
 
     private String classCode;
     private ArrayList<Student> studentList;
@@ -20,7 +24,7 @@ public class Classroom {
     }
 
     public boolean addStudent(Student student){
-        DataProvider.studentNumbers.add(student.getStudentNumber());
+
         return studentList.add(student);
     }
 
@@ -31,6 +35,8 @@ public class Classroom {
 
     public void removeStudent(Student student){
         studentList.remove(student);
+        Log.d("STUDENT", student.toString());
+        Log.d("ARRAYLIST", studentList.toString());
     }
 
     public int totalStudents(){
@@ -52,4 +58,32 @@ public class Classroom {
         return this.studentList;
     }
 
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.classCode);
+        dest.writeTypedList(this.studentList);
+    }
+
+    protected Classroom(Parcel in) {
+        this.classCode = in.readString();
+        this.studentList = in.createTypedArrayList(Student.CREATOR);
+    }
+
+    public static final Parcelable.Creator<Classroom> CREATOR = new Parcelable.Creator<Classroom>() {
+        @Override
+        public Classroom createFromParcel(Parcel source) {
+            return new Classroom(source);
+        }
+
+        @Override
+        public Classroom[] newArray(int size) {
+            return new Classroom[size];
+        }
+    };
 }

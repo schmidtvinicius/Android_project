@@ -1,14 +1,16 @@
 package com.vmschmidt.studentapplication.student;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class Student {
-
-
+public class Student implements Parcelable {
 
     private String firstName;
     private String middleName;
@@ -16,6 +18,7 @@ public class Student {
     private String emailAddress;
     private int studentNumber;
     private String classroom;
+
     private ArrayList<Student> friends;
 
     public Student(JSONObject jsonObject) throws JSONException {
@@ -35,6 +38,7 @@ public class Student {
         this.emailAddress = emailAddress;
         this.studentNumber = studentNumber;
         this.classroom = classroom;
+        this.friends = new ArrayList<>();
     }
 
 
@@ -74,6 +78,10 @@ public class Student {
         return "Student has no known class (probably quit the study)";
     }
 
+    public ArrayList<Student> getFriends() {
+        return friends;
+    }
+
     public void setClassroom(String classroom){
         this.classroom = classroom;
     }
@@ -90,6 +98,12 @@ public class Student {
         this.lastName = lastName;
     }
 
+    public void addFriend(Student friendToAdd){
+        if(!friends.contains(friendToAdd)){
+            friends.add(friendToAdd);
+        }
+    }
+
     public JSONObject toJSONObject() throws JSONException {
 
         JSONObject jsonObject = new JSONObject();
@@ -104,10 +118,49 @@ public class Student {
         return jsonObject;
     }
 
+//    @Override
+//    public String toString(){
+//        return "\n\n" + getFullName() + ":" + "\n\tStudent number: " + this.studentNumber + "\n\tE-mail address: " + this.emailAddress +
+//                "\n\tClass: " + getClassroom();
+//    }
+
     @Override
-    public String toString(){
-        return "\n\n" + getFullName() + ":" + "\n\tStudent number: " + this.studentNumber + "\n\tE-mail address: " + this.emailAddress +
-                "\n\tClass: " + getClassroom();
+    public int describeContents() {
+        return 0;
     }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.firstName);
+        dest.writeString(this.middleName);
+        dest.writeString(this.lastName);
+        dest.writeString(this.emailAddress);
+        dest.writeInt(this.studentNumber);
+        dest.writeString(this.classroom);
+        dest.writeList(this.friends);
+    }
+
+    protected Student(Parcel in) {
+        this.firstName = in.readString();
+        this.middleName = in.readString();
+        this.lastName = in.readString();
+        this.emailAddress = in.readString();
+        this.studentNumber = in.readInt();
+        this.classroom = in.readString();
+        this.friends = new ArrayList<Student>();
+        in.readList(this.friends, Student.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<Student> CREATOR = new Parcelable.Creator<Student>() {
+        @Override
+        public Student createFromParcel(Parcel source) {
+            return new Student(source);
+        }
+
+        @Override
+        public Student[] newArray(int size) {
+            return new Student[size];
+        }
+    };
 }
 

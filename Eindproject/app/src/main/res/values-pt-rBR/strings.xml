@@ -22,4 +22,7 @@
     <string name="create_classroom">Insira o novo código da turma</string>
     <string name="toast_cannot_create_classroom">O código da turma não é válido para o curso atual, ou já está em uso!</string>
     <string name="alert_delete_classroom">Deletar a turma atual?</string>
+    <string name="option_show_friend_list">Mostrar lista de amigos</string>
+    <string name="option_add_friend">Adicionar amigo</string>
+    <string name="dialog_add_friend">Adicionar amigo(a)?</string>
 </resources>

@@ -23,7 +23,7 @@ import java.util.Set;
 public class DataProvider {
 
     public static Map<String, Classroom> classrooms = null;
-    public static Set<Integer> studentNumbers = null;
+    public static Map<Integer, Student> studentNumbers = null;
 //    public static ArrayList<Classroom> classrooms = null;
 
     public static void addStudentList(List<JSONObject> studentListToAdd) {
@@ -57,10 +57,10 @@ public class DataProvider {
                     classroom = new Classroom(classroomCode);
                     classroom.addStudent(newStudent);
                     classrooms.put(classroomCode, classroom);
-                    studentNumbers.add(newStudent.getStudentNumber());
+                    studentNumbers.put(newStudent.getStudentNumber(), newStudent);
                 }else{
                     classroom.addStudent(newStudent);
-                    studentNumbers.add(newStudent.getStudentNumber());
+                    studentNumbers.put(newStudent.getStudentNumber(), newStudent);
                 }
             }
         }catch(JSONException e){
@@ -103,6 +103,25 @@ public class DataProvider {
 //        }
     }
 
+    public void addStudent(Student student){
+        studentNumbers.put(student.getStudentNumber(), student);
+        Classroom classroom = classrooms.get(student.getClassroom());
+        classroom.addStudent(student);
+    }
+
+    public static void addClassroom(String classroomCode){
+        Classroom newClassroom = new Classroom(classroomCode);
+        classrooms.put(classroomCode, newClassroom);
+    }
+
+    public static Classroom getClassroom(String classroomCode){
+        return classrooms.get(classroomCode);
+    }
+
+    public static Student findStudent(int studentNumber){
+        return studentNumbers.get(studentNumber);
+    }
+
     public static void removeClassroom(String classroomCode){
         classrooms.remove(classroomCode);
     }
@@ -128,7 +147,7 @@ public class DataProvider {
 
         if(classrooms == null){
             classrooms = new HashMap<>();
-            studentNumbers = new HashSet<>();
+            studentNumbers = new HashMap<>();
             readJSONResourceFile(context);
             addStudentList(readJSONResourceFile(context));
         }
