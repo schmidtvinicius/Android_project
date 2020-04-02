@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Classroom implements Parcelable {
+public class Classroom {
 
     private String classCode;
     private ArrayList<Student> studentList;
@@ -24,7 +24,6 @@ public class Classroom implements Parcelable {
     }
 
     public boolean addStudent(Student student){
-
         return studentList.add(student);
     }
 
@@ -59,31 +58,4 @@ public class Classroom implements Parcelable {
     }
 
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.classCode);
-        dest.writeTypedList(this.studentList);
-    }
-
-    protected Classroom(Parcel in) {
-        this.classCode = in.readString();
-        this.studentList = in.createTypedArrayList(Student.CREATOR);
-    }
-
-    public static final Parcelable.Creator<Classroom> CREATOR = new Parcelable.Creator<Classroom>() {
-        @Override
-        public Classroom createFromParcel(Parcel source) {
-            return new Classroom(source);
-        }
-
-        @Override
-        public Classroom[] newArray(int size) {
-            return new Classroom[size];
-        }
-    };
 }

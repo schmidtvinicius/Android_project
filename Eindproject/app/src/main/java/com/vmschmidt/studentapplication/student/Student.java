@@ -6,11 +6,10 @@ import android.os.Parcelable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 
-public class Student implements Parcelable {
+public class Student {
 
     private String firstName;
     private String middleName;
@@ -18,8 +17,7 @@ public class Student implements Parcelable {
     private String emailAddress;
     private int studentNumber;
     private String classroom;
-
-    private ArrayList<Student> friends;
+    private HashMap<String, Double> subjects;
 
     public Student(JSONObject jsonObject) throws JSONException {
         this.firstName = jsonObject.getString("First Name");
@@ -28,7 +26,7 @@ public class Student implements Parcelable {
         this.studentNumber = jsonObject.getInt("Student Number");
         this.emailAddress = jsonObject.getString("E-mail Address");
         this.classroom = jsonObject.getString("Classroom");
-        this.friends = new ArrayList<>();
+        subjects = new HashMap<>();
     }
 
     public Student(String firstName, String middleName, String lastName, String emailAddress, int studentNumber, String classroom) {
@@ -38,9 +36,12 @@ public class Student implements Parcelable {
         this.emailAddress = emailAddress;
         this.studentNumber = studentNumber;
         this.classroom = classroom;
-        this.friends = new ArrayList<>();
+        subjects = new HashMap<>();
     }
 
+    public void addSubject(String subjectName, double grade){
+        subjects.put(subjectName, grade);
+    }
 
     public String getFirstName() {
         return firstName;
@@ -78,8 +79,8 @@ public class Student implements Parcelable {
         return "Student has no known class (probably quit the study)";
     }
 
-    public ArrayList<Student> getFriends() {
-        return friends;
+    public HashMap<String, Double> getSubjects() {
+        return subjects;
     }
 
     public void setClassroom(String classroom){
@@ -98,10 +99,12 @@ public class Student implements Parcelable {
         this.lastName = lastName;
     }
 
-    public void addFriend(Student friendToAdd){
-        if(!friends.contains(friendToAdd)){
-            friends.add(friendToAdd);
-        }
+    public void setGrade(String subjectName, double newGrade){
+        subjects.put(subjectName, newGrade);
+    }
+
+    public void removeSubject(String subjectName){
+        subjects.remove(subjectName);
     }
 
     public JSONObject toJSONObject() throws JSONException {
@@ -124,43 +127,5 @@ public class Student implements Parcelable {
 //                "\n\tClass: " + getClassroom();
 //    }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.firstName);
-        dest.writeString(this.middleName);
-        dest.writeString(this.lastName);
-        dest.writeString(this.emailAddress);
-        dest.writeInt(this.studentNumber);
-        dest.writeString(this.classroom);
-        dest.writeList(this.friends);
-    }
-
-    protected Student(Parcel in) {
-        this.firstName = in.readString();
-        this.middleName = in.readString();
-        this.lastName = in.readString();
-        this.emailAddress = in.readString();
-        this.studentNumber = in.readInt();
-        this.classroom = in.readString();
-        this.friends = new ArrayList<Student>();
-        in.readList(this.friends, Student.class.getClassLoader());
-    }
-
-    public static final Parcelable.Creator<Student> CREATOR = new Parcelable.Creator<Student>() {
-        @Override
-        public Student createFromParcel(Parcel source) {
-            return new Student(source);
-        }
-
-        @Override
-        public Student[] newArray(int size) {
-            return new Student[size];
-        }
-    };
 }
 

@@ -1,20 +1,15 @@
 package com.vmschmidt.studentapplication;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.vmschmidt.studentapplication.dataprovider.DataProvider;
 import com.vmschmidt.studentapplication.student.Student;
 
-public class StudentDetailActivity extends AppCompatActivity  {
+public class StudentDetailActivity extends AppCompatActivity implements AddSubjectDialog.AddSubjectDialogListener {
 
     public static final String EXTRA_FIRSTNAME = "firstname";
     public static final String EXTRA_MIDDLENAME = "middlename";
@@ -47,8 +42,7 @@ public class StudentDetailActivity extends AppCompatActivity  {
     EditText editTextStudentNumber;
     FloatingActionButton mailButton;
     Student student;
-    int studentIndex;
-    int originalClassroomSize;
+    int studentNumber;
     String classroomCode;
 
     @Override
@@ -67,10 +61,9 @@ public class StudentDetailActivity extends AppCompatActivity  {
         });
 
         startIntent = getIntent();
-        classroomCode = startIntent.getStringExtra(ClassroomsListActivity.EXTRA_CLASSROOM);
-        studentIndex = startIntent.getIntExtra(StudentListActivity.EXTRA_STUDENT, -1);
-        student = DataProvider.classrooms.get(classroomCode).getStudentList().get(studentIndex);
-        originalClassroomSize = DataProvider.classrooms.get(classroomCode).totalStudents();
+        studentNumber = startIntent.getIntExtra(StudentListActivity.EXTRA_STUDENT, -1);
+        student = DataProvider.findStudent(studentNumber);
+        classroomCode = student.getClassroom();
 
         editTextFirstName = findViewById(R.id.editText_firstname);
         editTextMiddleName = findViewById(R.id.editText_middlename);
@@ -127,7 +120,7 @@ public class StudentDetailActivity extends AppCompatActivity  {
             if(resultCode == AllStudentsListActivity.RESULT_FRIEND_ADDED){
                 int studentNumberToAdd = data.getIntExtra(StudentListActivity.EXTRA_STUDENT, -1);
                 Student friendToAdd = DataProvider.findStudent(studentNumberToAdd);
-                student.addFriend(friendToAdd);
+
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -179,16 +172,26 @@ public class StudentDetailActivity extends AppCompatActivity  {
                 return false;
             }
         });
-        MenuItem addFriend = menu.add(R.string.option_add_friend);
-        addFriend.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        MenuItem addSubject = menu.add(R.string.option_add_subject);
+        addSubject.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Intent addFriendIntent = new Intent(StudentDetailActivity.this, AllStudentsListActivity.class);
-                addFriendIntent.putExtra(StudentListActivity.EXTRA_STUDENT, studentIndex);
-                startActivityForResult(addFriendIntent, ADD_FRIEND_REQUEST);
+                AddSubjectDialog addSubjectDialog = new AddSubjectDialog();
+                addSubjectDialog.show(getSupportFragmentManager(), "ADDSUBJECT");
                 return false;
             }
         });
+        MenuItem showSubjects = menu.add(R.string.option_show_subjects_list);
+        showSubjects.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent showSubjectsIntent = new Intent(StudentDetailActivity.this, SubjectsListActivity.class);
+                showSubjectsIntent.putExtra(StudentListActivity.EXTRA_STUDENT, student.getStudentNumber());
+                startActivity(showSubjectsIntent);
+                return false;
+            }
+        });
+        MenuItem analyzeGrades = menu.add(R.string.option_analyze_grades);
         return true;
     }
 
@@ -201,9 +204,13 @@ public class StudentDetailActivity extends AppCompatActivity  {
             resultIntent.putExtra(EXTRA_LASTNAME, editTextLastName.getText().toString().trim());
             resultIntent.putExtra(EXTRA_CLASSROOM, editTextClassroom.getText().toString().trim());
         }
-        resultIntent.putExtra(StudentListActivity.EXTRA_STUDENT, studentIndex);
+        resultIntent.putExtra(StudentListActivity.EXTRA_STUDENT, studentNumber);
         setResult(resultCode, resultIntent);
         super.onBackPressed();
     }
 
+    @Override
+    public void onAddSubjectDialogComplete(String subjectName, double grade) {
+        student.addSubject(subjectName, grade);
+    }
 }

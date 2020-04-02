@@ -16,7 +16,7 @@ import com.vmschmidt.studentapplication.student.StudentAdapter;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class AllStudentsListActivity extends AppCompatActivity implements AddFriendDialog.AddFriendDialogListener {
+public class AllStudentsListActivity extends AppCompatActivity  {
 
     public static final int RESULT_FRIEND_ADDED = 5;
 
@@ -51,8 +51,8 @@ public class AllStudentsListActivity extends AppCompatActivity implements AddFri
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 studentToAdd = allStudents.get(position);
-                AddFriendDialog addFriendDialog = new AddFriendDialog();
-                addFriendDialog.show(getSupportFragmentManager(), "ADDFRIEND");
+                AddSubjectDialog addSubjectDialog = new AddSubjectDialog();
+                addSubjectDialog.show(getSupportFragmentManager(), "ADDFRIEND");
             }
         });
     }
@@ -69,9 +69,4 @@ public class AllStudentsListActivity extends AppCompatActivity implements AddFri
         super.onBackPressed();
     }
 
-    @Override
-    public void onAddFriendDialogComplete(boolean friendAdded) {
-        this.friendAdded = friendAdded;
-        onBackPressed();
-    }
 }

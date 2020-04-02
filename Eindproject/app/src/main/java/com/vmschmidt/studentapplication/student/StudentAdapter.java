@@ -1,25 +1,17 @@
 package com.vmschmidt.studentapplication.student;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.vmschmidt.studentapplication.R;
-import com.vmschmidt.studentapplication.classroom.Classroom;
-import com.vmschmidt.studentapplication.dataprovider.DataProvider;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class StudentAdapter extends ArrayAdapter<Student> {

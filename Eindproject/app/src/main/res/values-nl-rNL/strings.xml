@@ -22,7 +22,12 @@
     <string name="create_classroom">Voer de nieuwe klascode in:</string>
     <string name="toast_cannot_create_classroom">De klascode is niet geldig voor de huidige richting, of de code wordt al gebruikt!</string>
     <string name="alert_delete_classroom">De hele klas verwijderen?</string>
-    <string name="option_show_friend_list">Toon vriendenlijst</string>
-    <string name="option_add_friend">Vriend toevoegen</string>
-    <string name="dialog_add_friend">Vriend toevoegen?</string>
+    <string name="option_show_subjects_list">Toon vakkenlijst</string>
+    <string name="option_add_subject">Vak toevoegen</string>
+    <string name="dialog_add_subject">Voer de naam van het vak en het cijfer in:</string>
+    <string name="hint_subject">Vak</string>
+    <string name="hint_grade">Cijfer</string>
+    <string name="toast_invalid_grade">Het cijfer moet tussen 0 en 10 zitten</string>
+    <string name="toast_missing_subject_name">Het vak moet een naam hebben</string>
+    <string name="option_analyze_grades">Resultaten analyseren</string>
 </resources>

@@ -25,6 +25,7 @@ public class StudentListActivity extends AppCompatActivity implements AlertDialo
     private ListView studentListView;
     private StudentAdapter studentAdapter;
     private int resultCode;
+    private Student selectedStudent;
 
     public static final String EXTRA_STUDENT = "studentPosition";
     public static final int RESULT_DELETED = -2;
@@ -47,9 +48,9 @@ public class StudentListActivity extends AppCompatActivity implements AlertDialo
         studentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedStudent = DataProvider.getClassroom(classroomCode).getStudentList().get(position);
                 Intent studentDetailIntent = new Intent(StudentListActivity.this, StudentDetailActivity.class);
-                studentDetailIntent.putExtra(ClassroomsListActivity.EXTRA_CLASSROOM, classroomCode);
-                studentDetailIntent.putExtra(EXTRA_STUDENT, position);
+                studentDetailIntent.putExtra(EXTRA_STUDENT, selectedStudent.getStudentNumber());
                 startActivityForResult(studentDetailIntent, VIEW_STUDENT_REQUEST);
             }
         });
@@ -83,8 +84,8 @@ public class StudentListActivity extends AppCompatActivity implements AlertDialo
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode == StudentListActivity.VIEW_STUDENT_REQUEST){
-            int studentIndex = data.getIntExtra(EXTRA_STUDENT, -1);
-            Student student = DataProvider.classrooms.get(classroomCode).getStudentList().get(studentIndex);
+            int studentNumber = data.getIntExtra(EXTRA_STUDENT, -1);
+            Student student = DataProvider.findStudent(studentNumber);
             if(resultCode == RESULT_OK){
                 String newFirstName = data.getStringExtra(StudentDetailActivity.EXTRA_FIRSTNAME);
                 String newMiddleName = data.getStringExtra(StudentDetailActivity.EXTRA_MIDDLENAME);
@@ -126,8 +127,8 @@ public class StudentListActivity extends AppCompatActivity implements AlertDialo
             String lastName = data.getStringExtra(CreateStudentActivity.EXTRA_LASTNAME);
             int studentNumber = data.getIntExtra(CreateStudentActivity.EXTRA_STUDENT_NUMBER, -1);
             String email = String.valueOf(studentNumber).concat("@student.saxion.nl");
-            Classroom classroom = DataProvider.classrooms.get(classroomCode);
-            classroom.addStudent(new Student(firstName, middleName, lastName, email, studentNumber, classroomCode));
+            Student newStudent = new Student(firstName, middleName, lastName, email, studentNumber, classroomCode);
+            DataProvider.addStudent(newStudent);
         }
         studentAdapter.notifyDataSetChanged();
         super.onActivityResult(requestCode, resultCode, data);

@@ -23,7 +23,7 @@ import java.util.Set;
 public class DataProvider {
 
     public static Map<String, Classroom> classrooms = null;
-    public static Map<Integer, Student> studentNumbers = null;
+    public static HashMap<Integer, Student> studentNumbers = null;
 //    public static ArrayList<Classroom> classrooms = null;
 
     public static void addStudentList(List<JSONObject> studentListToAdd) {
@@ -103,7 +103,7 @@ public class DataProvider {
 //        }
     }
 
-    public void addStudent(Student student){
+    public static void addStudent(Student student){
         studentNumbers.put(student.getStudentNumber(), student);
         Classroom classroom = classrooms.get(student.getClassroom());
         classroom.addStudent(student);

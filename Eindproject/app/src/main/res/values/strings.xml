@@ -21,7 +21,12 @@
     <string name="create_classroom">Insert the new classroom code:</string>
     <string name="toast_cannot_create_classroom">The classroom code is not valid for the current course, or it\'s already being used!</string>
     <string name="alert_delete_classroom">Delete the whole class?</string>
-    <string name="option_show_friend_list">Show friends list</string>
-    <string name="option_add_friend">Add friend</string>
-    <string name="dialog_add_friend">Add friend?</string>
+    <string name="option_show_subjects_list">Show subjects list</string>
+    <string name="option_add_subject">Add subject</string>
+    <string name="dialog_add_subject">Enter the subject name and the grade:</string>
+    <string name="hint_subject">Subject</string>
+    <string name="hint_grade">Grade</string>
+    <string name="toast_invalid_grade">The grade must be between 0 and 10</string>
+    <string name="toast_missing_subject_name">The subject must have a name</string>
+    <string name="option_analyze_grades">Analyze results</string>
 </resources>
