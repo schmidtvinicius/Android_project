@@ -30,4 +30,5 @@
     <string name="toast_invalid_grade">A nota deve ser entre 0 e 10</string>
     <string name="toast_missing_subject_name">A disciplina deve ter um nome</string>
     <string name="option_analyze_grades">Analizar resultados</string>
+    <string name="toast_invalid_subject_name">Nenhuma disciplina encontrada para o aluno atual</string>
 </resources>

@@ -30,4 +30,5 @@
     <string name="toast_invalid_grade">Het cijfer moet tussen 0 en 10 zitten</string>
     <string name="toast_missing_subject_name">Het vak moet een naam hebben</string>
     <string name="option_analyze_grades">Resultaten analyseren</string>
+    <string name="toast_invalid_subject_name">Geen vakken gevonden voor de huidige student</string>
 </resources>

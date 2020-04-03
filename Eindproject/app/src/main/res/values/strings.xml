@@ -29,4 +29,5 @@
     <string name="toast_invalid_grade">The grade must be between 0 and 10</string>
     <string name="toast_missing_subject_name">The subject must have a name</string>
     <string name="option_analyze_grades">Analyze results</string>
+    <string name="toast_invalid_subject_name">Didn\'t find any subjects for the current student</string>
 </resources>

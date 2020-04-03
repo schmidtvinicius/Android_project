@@ -192,6 +192,15 @@ public class StudentDetailActivity extends AppCompatActivity implements AddSubje
             }
         });
         MenuItem analyzeGrades = menu.add(R.string.option_analyze_grades);
+        analyzeGrades.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent analyzeResultsIntent = new Intent(StudentDetailActivity.this, AnalyzeReusltsActivity.class);
+                analyzeResultsIntent.putExtra(StudentListActivity.EXTRA_STUDENT, studentNumber);
+                startActivity(analyzeResultsIntent);
+                return false;
+            }
+        });
         return true;
     }
 

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -38,8 +39,8 @@ public class EditSubjectDialog extends DialogFragment{
         String subjectName = args.getString(SubjectsListActivity.KEY_SUBJECT_NAME);
         double grade = args.getDouble(SubjectsListActivity.KEY_GRADE);
 
-        final EditText editTextSubject = rootView.findViewById(R.id.editText_subject_name);
-        editTextSubject.setText(subjectName);
+        final TextView textViewSubject = rootView.findViewById(R.id.textView_subject_name);
+        textViewSubject.setText(subjectName);
         final EditText editTextGrade = rootView.findViewById(R.id.editText_new_grade);
         editTextGrade.setText(String.valueOf(grade));
         Button confirmButton = rootView.findViewById(R.id.btn_confirm_edit_subject);
@@ -79,7 +80,7 @@ public class EditSubjectDialog extends DialogFragment{
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onEditSubjectDialogComplete(true, editTextSubject.getText().toString(), Double.parseDouble(editTextGrade.getText().toString()));
+                listener.onEditSubjectDialogComplete(true, textViewSubject.getText().toString(), Double.parseDouble(editTextGrade.getText().toString()));
                 dismiss();
             }
         });
@@ -90,7 +91,7 @@ public class EditSubjectDialog extends DialogFragment{
                 if(editTextGrade.getCurrentTextColor() == Color.RED || editTextGrade.getText().length() == 0){
                     Toast.makeText(getContext(), R.string.toast_invalid_grade, Toast.LENGTH_SHORT).show();
                 }else{
-                    listener.onEditSubjectDialogComplete(false, editTextSubject.getText().toString(), Double.parseDouble(editTextGrade.getText().toString()));
+                    listener.onEditSubjectDialogComplete(false, textViewSubject.getText().toString(), Double.parseDouble(editTextGrade.getText().toString()));
                     dismiss();
                 }
             }
