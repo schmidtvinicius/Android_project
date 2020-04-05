@@ -41,7 +41,7 @@ public class StudentListActivity extends AppCompatActivity implements AlertDialo
 
         classroomCode = getIntent().getStringExtra(ClassroomsListActivity.EXTRA_CLASSROOM);
 
-        studentAdapter = new StudentAdapter(this, DataProvider.classrooms.get(classroomCode).getStudentList());
+        studentAdapter = new StudentAdapter(this, DataProvider.getClassroom(classroomCode).getStudentList());
 
         studentListView.setAdapter(studentAdapter);
 
@@ -112,7 +112,7 @@ public class StudentListActivity extends AppCompatActivity implements AlertDialo
                 if(newClassroomCode.matches("^EHI1V.([BI][ab]|S[a-d])$") && !newClassroomCode.equals(student.getClassroom())){
                     Classroom newClassroom = DataProvider.checkExistingClassroom(newClassroomCode);
                     if(newClassroom != null){
-                        DataProvider.classrooms.get(classroomCode).getStudentList().remove(student);
+                        DataProvider.getClassroom(classroomCode).getStudentList().remove(student);
                         newClassroom.addStudent(student);
                     }
                     student.setClassroom(newClassroomCode);

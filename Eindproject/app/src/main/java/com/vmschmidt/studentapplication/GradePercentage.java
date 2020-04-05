@@ -62,6 +62,10 @@ public class GradePercentage extends View {
         invalidate();
     }
 
+    public Paint getCurrentBarPaint() {
+        return currentBarPaint;
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         int height = getHeight();

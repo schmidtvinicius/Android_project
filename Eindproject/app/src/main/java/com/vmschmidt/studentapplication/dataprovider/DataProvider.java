@@ -22,8 +22,8 @@ import java.util.Set;
 
 public class DataProvider {
 
-    public static Map<String, Classroom> classrooms = null;
-    public static HashMap<Integer, Student> studentNumbers = null;
+    private static Map<String, Classroom> classrooms = null;
+    private static HashMap<Integer, Student> studentNumbers = null;
 //    public static ArrayList<Classroom> classrooms = null;
 
     public static void addStudentList(List<JSONObject> studentListToAdd) {
@@ -124,6 +124,15 @@ public class DataProvider {
 
     public static void removeClassroom(String classroomCode){
         classrooms.remove(classroomCode);
+        ArrayList<Student> studentsToRemove = new ArrayList<>();
+        for(Integer studentNumber : studentNumbers.keySet()){
+            if(studentNumbers.get(studentNumber).getClassroom().equals(classroomCode)){
+                studentsToRemove.add(studentNumbers.get(studentNumber));
+            }
+        }
+        for(Student studentToRemove : studentsToRemove){
+            studentNumbers.remove(studentToRemove.getStudentNumber());
+        }
     }
 
     public static void removeStudent(Student student){
@@ -143,7 +152,7 @@ public class DataProvider {
         return null;
     }
 
-    public static Set<String> getKeys(Context context){
+    public static Set<String> getClassroomsKeys(Context context){
 
         if(classrooms == null){
             classrooms = new HashMap<>();
@@ -152,10 +161,17 @@ public class DataProvider {
             addStudentList(readJSONResourceFile(context));
         }
 
-        Set<String> classroomCodes = new HashSet<>();
+        return classrooms.keySet();
+    }
 
-        classroomCodes.addAll(classrooms.keySet());
-        return classroomCodes;
+    public static Set<Integer> getStudentKeys(Context context){
+        if(studentNumbers == null){
+            classrooms = new HashMap<>();
+            studentNumbers = new HashMap<>();
+            readJSONResourceFile(context);
+            addStudentList(readJSONResourceFile(context));
+        }
+        return studentNumbers.keySet();
     }
 
     private static ArrayList<JSONObject> readJSONResourceFile(Context context){

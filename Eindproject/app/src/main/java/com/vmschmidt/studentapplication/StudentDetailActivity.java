@@ -115,33 +115,21 @@ public class StudentDetailActivity extends AppCompatActivity implements AddSubje
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode == ADD_FRIEND_REQUEST){
-            if(resultCode == AllStudentsListActivity.RESULT_FRIEND_ADDED){
-                int studentNumberToAdd = data.getIntExtra(StudentListActivity.EXTRA_STUDENT, -1);
-                Student friendToAdd = DataProvider.findStudent(studentNumberToAdd);
-
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu, menu);
-        int orientation = this.getResources().getConfiguration().orientation;
-        if(orientation == Configuration.ORIENTATION_LANDSCAPE){
-            MenuItem mailOption = menu.add(R.string.option_mail);
-            mailOption.setIcon(R.drawable.ic_email);
-            mailOption.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            mailOption.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    mailButton.callOnClick();
-                    return false;
-                }
-            });
-        }
+//        int orientation = this.getResources().getConfiguration().orientation;
+//        if(orientation == Configuration.ORIENTATION_LANDSCAPE){
+//            MenuItem mailOption = menu.add(R.string.option_mail);
+//            mailOption.setIcon(R.drawable.ic_email);
+//            mailOption.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+//            mailOption.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+//                @Override
+//                public boolean onMenuItemClick(MenuItem item) {
+//                    mailButton.callOnClick();
+//                    return false;
+//                }
+//            });
+//        }
         MenuItem deleteOption = menu.add(R.string.option_delete);
         deleteOption.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
@@ -177,6 +165,9 @@ public class StudentDetailActivity extends AppCompatActivity implements AddSubje
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 AddSubjectDialog addSubjectDialog = new AddSubjectDialog();
+                Bundle args = new Bundle();
+                args.putInt(StudentListActivity.EXTRA_STUDENT, studentNumber);
+                addSubjectDialog.setArguments(args);
                 addSubjectDialog.show(getSupportFragmentManager(), "ADDSUBJECT");
                 return false;
             }
@@ -188,16 +179,6 @@ public class StudentDetailActivity extends AppCompatActivity implements AddSubje
                 Intent showSubjectsIntent = new Intent(StudentDetailActivity.this, SubjectsListActivity.class);
                 showSubjectsIntent.putExtra(StudentListActivity.EXTRA_STUDENT, student.getStudentNumber());
                 startActivity(showSubjectsIntent);
-                return false;
-            }
-        });
-        MenuItem analyzeGrades = menu.add(R.string.option_analyze_grades);
-        analyzeGrades.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                Intent analyzeResultsIntent = new Intent(StudentDetailActivity.this, AnalyzeReusltsActivity.class);
-                analyzeResultsIntent.putExtra(StudentListActivity.EXTRA_STUDENT, studentNumber);
-                startActivity(analyzeResultsIntent);
                 return false;
             }
         });

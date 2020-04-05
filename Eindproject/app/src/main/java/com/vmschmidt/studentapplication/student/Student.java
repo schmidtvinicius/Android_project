@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class Student {
 
@@ -79,8 +80,16 @@ public class Student {
         return "Student has no known class (probably quit the study)";
     }
 
-    public HashMap<String, Double> getSubjects() {
-        return subjects;
+    public boolean hasSubject(String subjectName){
+        return subjects.containsKey(subjectName);
+    }
+
+    public Double getGrade(String subjectName){
+        return subjects.get(subjectName);
+    }
+
+    public Set<String> getSubjects(){
+        return subjects.keySet();
     }
 
     public void setClassroom(String classroom){

@@ -31,4 +31,8 @@
     <string name="toast_missing_subject_name">A disciplina deve ter um nome</string>
     <string name="option_analyze_grades">Analizar resultados</string>
     <string name="toast_invalid_subject_name">Nenhuma disciplina encontrada para o aluno atual</string>
+    <string name="toast_subject_already_exists">O estudante já tem essa disciplina!</string>
+    <string name="option_sector_graphic">Gráfico de setor</string>
+    <string name="option_bar_graphic">Gráfico de barra</string>
+    <string name="option_analyze_courses">Analisar cursos</string>
 </resources>

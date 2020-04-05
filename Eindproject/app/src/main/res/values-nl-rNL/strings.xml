@@ -31,4 +31,8 @@
     <string name="toast_missing_subject_name">Het vak moet een naam hebben</string>
     <string name="option_analyze_grades">Resultaten analyseren</string>
     <string name="toast_invalid_subject_name">Geen vakken gevonden voor de huidige student</string>
+    <string name="toast_subject_already_exists">De student heeft dit vak al!</string>
+    <string name="option_sector_graphic">Cirkelvormige grafiek</string>
+    <string name="option_bar_graphic">Staafgrafiek</string>
+    <string name="option_analyze_courses">Richtingen analyseren</string>
 </resources>

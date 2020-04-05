@@ -24,7 +24,7 @@ public class AnalyzeReusltsActivity extends AppCompatActivity {
 
         gradeAnalyzer = findViewById(R.id.gradeAnalyzer);
 
-        gradeAnalyzer.setCurrentSubjects(currentStudent.getSubjects());
+        gradeAnalyzer.setCurrentStudent(currentStudent);
 
     }
 }

@@ -30,4 +30,8 @@
     <string name="toast_missing_subject_name">The subject must have a name</string>
     <string name="option_analyze_grades">Analyze results</string>
     <string name="toast_invalid_subject_name">Didn\'t find any subjects for the current student</string>
+    <string name="toast_subject_already_exists">The subject already exists for this student!</string>
+    <string name="option_sector_graphic">Sector graphic</string>
+    <string name="option_bar_graphic">Bar graphic</string>
+    <string name="option_analyze_courses">Analyze courses</string>
 </resources>

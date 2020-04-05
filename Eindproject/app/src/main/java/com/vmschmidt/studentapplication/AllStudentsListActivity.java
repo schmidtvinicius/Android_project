@@ -32,7 +32,7 @@ public class AllStudentsListActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_students_list);
 
-        allClassrooms = DataProvider.getKeys(this);
+        allClassrooms = DataProvider.getClassroomsKeys(this);
 
         studentListView = findViewById(R.id.listview_all_students);
 

@@ -16,9 +16,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.vmschmidt.studentapplication.dataprovider.DataProvider;
+import com.vmschmidt.studentapplication.student.Student;
+
+import java.util.HashMap;
+
 public class AddSubjectDialog extends DialogFragment {
 
     private AddSubjectDialogListener listener;
+    private Student currentStudent;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -31,11 +37,37 @@ public class AddSubjectDialog extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = getLayoutInflater().inflate(R.layout.add_subject_dialog, container, false);
 
+        int studentNumber = getArguments().getInt(StudentListActivity.EXTRA_STUDENT, -1);
+
+        currentStudent = DataProvider.findStudent(studentNumber);
+
         Button confirmButton = rootView.findViewById(R.id.btn_confirm_add_subject);
         Button cancelButton = rootView.findViewById(R.id.btn_cancel_add_subject);
         final EditText editTextSubject = rootView.findViewById(R.id.editText_new_subject);
         final EditText editTextGrade = rootView.findViewById(R.id.editText_grade);
 
+        editTextSubject.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.length() > 0){
+                    if(currentStudent.hasSubject(s.toString().trim())){
+                        editTextSubject.setTextColor(Color.RED);
+                    }else{
+                        editTextSubject.setTextColor(Color.BLACK);
+                    }
+                }
+            }
+        });
 
         editTextGrade.addTextChangedListener(new TextWatcher() {
             @Override
@@ -68,8 +100,10 @@ public class AddSubjectDialog extends DialogFragment {
                     Toast.makeText(getContext(), R.string.toast_invalid_grade, Toast.LENGTH_SHORT).show();
                 }else if(editTextSubject.getText().length() == 0){
                     Toast.makeText(getContext(), R.string.toast_missing_subject_name, Toast.LENGTH_SHORT).show();
+                }else if(editTextSubject.getCurrentTextColor() == Color.RED){
+                    Toast.makeText(getContext(), R.string.toast_subject_already_exists, Toast.LENGTH_SHORT).show();
                 }else{
-                    listener.onAddSubjectDialogComplete(editTextSubject.getText().toString(), Double.parseDouble(editTextGrade.getText().toString()));
+                    listener.onAddSubjectDialogComplete(editTextSubject.getText().toString().trim(), Double.parseDouble(editTextGrade.getText().toString()));
                     dismiss();
                 }
             }

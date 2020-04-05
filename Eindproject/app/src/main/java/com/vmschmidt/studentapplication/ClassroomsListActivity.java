@@ -59,7 +59,7 @@ public class ClassroomsListActivity extends AppCompatActivity implements CreateC
         if(classroomCodes == null){
             classroomCodes = new ArrayList<>();
         }
-        Set<String> keys = DataProvider.getKeys(this);
+        Set<String> keys = DataProvider.getClassroomsKeys(this);
         Log.d("TOTALKEYS", String.valueOf(keys.size()));
         classroomCodes.clear();
         for(String classroomCode : keys){
@@ -101,8 +101,7 @@ public class ClassroomsListActivity extends AppCompatActivity implements CreateC
 
     @Override
     public void onCreateClassroomComplete(String newClassroomCode) {
-        Classroom newClassroom = new Classroom(newClassroomCode);
-        DataProvider.classrooms.put(newClassroomCode, newClassroom);
+        DataProvider.addClassroom(newClassroomCode);
         updateCurrentClassrooms();
         adapter.notifyDataSetChanged();
     }

@@ -11,11 +11,13 @@ import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.vmschmidt.studentapplication.student.Student;
+
 import java.util.HashMap;
 
 public class GradeAnalyzer extends ConstraintLayout {
 
-    private HashMap<String, Double> currentSubjects;
+    private Student currentStudent;
 
     private GradePercentage gradePercentage;
     private TextView visualizedSubject;
@@ -37,8 +39,8 @@ public class GradeAnalyzer extends ConstraintLayout {
         init();
     }
 
-    public void setCurrentSubjects(HashMap<String, Double> currentSubjects){
-        this.currentSubjects = currentSubjects;
+    public void setCurrentStudent(Student currentStudent){
+        this.currentStudent = currentStudent;
     }
 
     public void init(){
@@ -54,10 +56,12 @@ public class GradeAnalyzer extends ConstraintLayout {
             @Override
             public void onClick(View v) {
                 if(subjectToLook.getText().length() > 0){
-                    String subject = subjectToLook.getText().toString();
-                    if(currentSubjects.containsKey(subject)){
-                        visualizedSubject.setText(subject + ": " + currentSubjects.get(subject));
-                        gradePercentage.setCurrentGrade(currentSubjects.get(subject));
+                    String subject = subjectToLook.getText().toString().trim();
+                    if(currentStudent.hasSubject(subject)){
+                        double grade = currentStudent.getGrade(subject);
+                        visualizedSubject.setText(subject + ": " + (grade));
+                        gradePercentage.setCurrentGrade(grade);
+                        //visualizedSubject.setTextColor(gradePercentage.getCurrentBarPaint().getColor());
                     }else{
                         Toast.makeText(getContext(), R.string.toast_invalid_subject_name, Toast.LENGTH_SHORT).show();
                     }

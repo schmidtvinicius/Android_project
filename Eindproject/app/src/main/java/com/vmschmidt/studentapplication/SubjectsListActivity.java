@@ -2,7 +2,10 @@ package com.vmschmidt.studentapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,12 +16,13 @@ import com.vmschmidt.studentapplication.student.Student;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class SubjectsListActivity extends AppCompatActivity implements EditSubjectDialog.EditSubjectDialogListener {
 
     private Student currentStudent;
     private int studentNumber;
-    private HashMap<String, Double> subjects;
+    private Set<String> subjects;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> subjectNames;
 
@@ -44,7 +48,7 @@ public class SubjectsListActivity extends AppCompatActivity implements EditSubje
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle args = new Bundle();
                 String subjectName = subjectNames.get(position);
-                double grade = subjects.get(subjectName);
+                double grade = currentStudent.getGrade(subjectName);
                 args.putString(KEY_SUBJECT_NAME, subjectName);
                 args.putDouble(KEY_GRADE, grade);
                 EditSubjectDialog editSubjectDialog = new EditSubjectDialog();
@@ -54,13 +58,29 @@ public class SubjectsListActivity extends AppCompatActivity implements EditSubje
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        MenuItem analyzeGrades = menu.add(R.string.option_analyze_grades);
+        analyzeGrades.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent analyzeResultsIntent = new Intent(SubjectsListActivity.this, AnalyzeReusltsActivity.class);
+                analyzeResultsIntent.putExtra(StudentListActivity.EXTRA_STUDENT, studentNumber);
+                startActivity(analyzeResultsIntent);
+                return false;
+            }
+        });
+        return true;
+    }
+
     public void updateSubjects(){
         if(subjectNames == null){
             subjectNames = new ArrayList<>();
         }
         subjects = currentStudent.getSubjects();
         subjectNames.clear();
-        subjectNames.addAll(subjects.keySet());
+        subjectNames.addAll(subjects);
     }
 
     @Override

@@ -19,6 +19,8 @@ import android.widget.Toolbar;
 import com.vmschmidt.studentapplication.classroom.Classroom;
 import com.vmschmidt.studentapplication.dataprovider.DataProvider;
 
+import java.util.Set;
+
 public class CreateStudentActivity extends AppCompatActivity {
 
     public static final String EXTRA_FIRSTNAME = "firstname";
@@ -37,6 +39,7 @@ public class CreateStudentActivity extends AppCompatActivity {
     private String classroomCode;
     private Intent startIntent;
     private Intent resultIntent;
+    private Set<Integer> studentKeys;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +48,13 @@ public class CreateStudentActivity extends AppCompatActivity {
 
         //actionBar.setCustomView();
 
+        studentKeys = DataProvider.getStudentKeys(this);
+
         startIntent = getIntent();
 
         classroomCode = startIntent.getStringExtra(ClassroomsListActivity.EXTRA_CLASSROOM);
 
-        classroom = DataProvider.classrooms.get(classroomCode);
+        classroom = DataProvider.getClassroom(classroomCode);
 
         editTextFirstName = findViewById(R.id.editText_new_firstname);
         editTextMiddleName = findViewById(R.id.editText_new_middlename);
@@ -72,7 +77,7 @@ public class CreateStudentActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.length() > 0){
-                    if(!s.toString().trim().matches("^[0-9]{6}$") || DataProvider.studentNumbers.containsKey(Integer.parseInt(s.toString().trim()))){
+                    if(!s.toString().trim().matches("^[0-9]{6}$") || studentKeys.contains(Integer.parseInt(s.toString().trim()))){
                         editTextStudentNumber.setTextColor(Color.RED);
                     }else{
                         editTextStudentNumber.setTextColor(Color.BLACK);
@@ -119,14 +124,14 @@ public class CreateStudentActivity extends AppCompatActivity {
                     Toast.makeText(CreateStudentActivity.this, R.string.toast_missing_name, Toast.LENGTH_SHORT).show();
                 } else{
                     resultIntent = new Intent();
-                    resultIntent.putExtra(CreateStudentActivity.EXTRA_FIRSTNAME, editTextFirstName.getText().toString());
+                    resultIntent.putExtra(CreateStudentActivity.EXTRA_FIRSTNAME, editTextFirstName.getText().toString().trim());
                     if(editTextMiddleName.getText().length() > 0){
-                        resultIntent.putExtra(CreateStudentActivity.EXTRA_MIDDLENAME, editTextMiddleName.getText().toString());
+                        resultIntent.putExtra(CreateStudentActivity.EXTRA_MIDDLENAME, editTextMiddleName.getText().toString().trim());
                     }else{
                         resultIntent.putExtra(CreateStudentActivity.EXTRA_MIDDLENAME, "");
                     }
                     if(editTextLastName.getText().length() > 0){
-                        resultIntent.putExtra(CreateStudentActivity.EXTRA_LASTNAME, editTextLastName.getText().toString());
+                        resultIntent.putExtra(CreateStudentActivity.EXTRA_LASTNAME, editTextLastName.getText().toString().trim());
                     }else{
                         resultIntent.putExtra(CreateStudentActivity.EXTRA_LASTNAME, "");
                     }
