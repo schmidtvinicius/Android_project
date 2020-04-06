@@ -20,12 +20,13 @@
         android:id="@+id/textView_current_subject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="64dp"
         android:textColor="@color/design_default_color_on_secondary"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/gradePercentage"
+        app:layout_constraintStart_toStartOf="@+id/gradePercentage"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25" />
 
     <EditText
         android:id="@+id/editText_subject_to_look"
@@ -34,21 +35,23 @@
         android:ems="10"
         android:hint="@string/hint_subject"
         android:inputType="textPersonName"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
 
     <Button
         android:id="@+id/btn_confirm_look_subject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/option_confirm"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.65"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/editText_subject_to_look"
+        app:layout_constraintStart_toStartOf="@+id/editText_subject_to_look"
         app:layout_constraintTop_toBottomOf="@+id/editText_subject_to_look" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

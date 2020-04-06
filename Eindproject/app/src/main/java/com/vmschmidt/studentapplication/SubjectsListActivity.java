@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +27,7 @@ public class SubjectsListActivity extends AppCompatActivity implements EditSubje
     private Set<String> subjects;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> subjectNames;
+    private final float NINE_INCH = (float) Math.sqrt((Math.pow(2048, 2)) + (Math.pow(1536, 2)));
 
     public static final String KEY_SUBJECT_NAME = "subjectname";
     public static final String KEY_GRADE = "grade";
@@ -39,8 +42,20 @@ public class SubjectsListActivity extends AppCompatActivity implements EditSubje
         studentNumber = getIntent().getIntExtra(StudentListActivity.EXTRA_STUDENT, -1);
 
         currentStudent = DataProvider.findStudent(studentNumber);
+
         updateSubjects();
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, subjectNames);
+
+        DisplayMetrics bla = getResources().getDisplayMetrics();
+        float height = bla.heightPixels;
+        float width = bla.widthPixels;
+        float screenDiagonal = (float) Math.sqrt((Math.pow(height, 2)) + (Math.pow(width, 2)));
+        Log.d("DIAGONAL", String.valueOf(screenDiagonal));
+        if(screenDiagonal > NINE_INCH){
+            adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, subjectNames);
+        }else{
+            adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, subjectNames);
+        }
+
         listViewSubjects.setAdapter(adapter);
 
         listViewSubjects.setOnItemClickListener(new AdapterView.OnItemClickListener() {

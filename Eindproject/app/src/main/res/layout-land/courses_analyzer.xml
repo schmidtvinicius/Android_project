@@ -10,8 +10,9 @@
         android:id="@+id/coursesGraphic"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginEnd="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView_itsm_percentage"
+        app:layout_constraintEnd_toStartOf="@+id/radioButton_sector_graphic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -19,46 +20,49 @@
         android:id="@+id/radioButton_sector_graphic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="400dp"
-        android:layout_marginBottom="16dp"
         android:text="@string/option_sector_graphic"
-        app:layout_constraintBottom_toTopOf="@+id/radioButton_bar_graphic"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.65" />
 
     <RadioButton
         android:id="@+id/radioButton_bar_graphic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="400dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginTop="8dp"
         android:text="@string/option_bar_graphic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/radioButton_sector_graphic"
+        app:layout_constraintTop_toBottomOf="@+id/radioButton_sector_graphic" />
 
     <TextView
         android:id="@+id/textView_business_percentage"
         android:layout_width="wrap_content"
         android:layout_height="19dp"
-        android:layout_marginStart="400dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/radioButton_sector_graphic"
         app:layout_constraintTop_toBottomOf="@+id/textView_software_percentage" />
 
     <TextView
         android:id="@+id/textView_software_percentage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="400dp"
         android:layout_marginTop="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/radioButton_sector_graphic"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.15" />
 
     <TextView
         android:id="@+id/textView_itsm_percentage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="400dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/radioButton_sector_graphic"
         app:layout_constraintTop_toBottomOf="@+id/textView_business_percentage" />
 </androidx.constraintlayout.widget.ConstraintLayout>

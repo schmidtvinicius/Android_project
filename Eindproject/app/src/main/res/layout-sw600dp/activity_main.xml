@@ -16,7 +16,7 @@
         android:layout_marginEnd="24dp"
         android:text="Software Engineering"
         android:textColor="@color/design_default_color_on_secondary"
-        android:textSize="30sp"
+        android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,7 @@
         android:layout_marginEnd="24dp"
         android:text="Business"
         android:textColor="@color/design_default_color_on_secondary"
-        android:textSize="30sp"
+        android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_se" />
@@ -45,7 +45,7 @@
         android:layout_marginEnd="24dp"
         android:text="ITSM"
         android:textColor="@color/design_default_color_on_secondary"
-        android:textSize="30sp"
+        android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_business" />

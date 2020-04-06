@@ -12,14 +12,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:ems="20"
+        android:ems="10"
         android:hint="@string/hint_firstname"
         android:inputType="textPersonName"
         android:textColor="@color/design_default_color_on_secondary"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,15 +26,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:ems="20"
+        android:ems="10"
         android:hint="@string/hint_middlename"
         android:inputType="textPersonName"
         android:textColor="@color/design_default_color_on_secondary"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_new_firstname" />
+        app:layout_constraintStart_toEndOf="@+id/editText_new_firstname"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editText_new_lastname"
@@ -45,16 +40,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:ems="20"
+        android:ems="10"
         android:hint="@string/hint_lastname"
         android:inputType="textPersonName"
         android:textColor="@color/design_default_color_on_secondary"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_new_middlename" />
+        app:layout_constraintStart_toEndOf="@+id/editText_new_middlename"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editText_new_email"
@@ -71,7 +63,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_new_lastname" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_new_firstname" />
 
     <EditText
         android:id="@+id/editText_new_classcode"

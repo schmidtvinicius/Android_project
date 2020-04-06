@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +26,7 @@ public class ClassroomsListActivity extends AppCompatActivity implements CreateC
     private String currentRegex;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> classroomCodes;
+    private final float NINE_INCH = (float) Math.sqrt((Math.pow(2048, 2)) + (Math.pow(1536, 2)));
 
     public static final int VIEW_CLASSROOM_REQUEST = 10;
     public static final String EXTRA_CLASSROOM = "classroomCode";
@@ -39,7 +41,18 @@ public class ClassroomsListActivity extends AppCompatActivity implements CreateC
         updateCurrentClassrooms();
 
         ListView classroomListView = findViewById(R.id.classroms_list);
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, classroomCodes);
+
+        DisplayMetrics bla = getResources().getDisplayMetrics();
+        float height = bla.heightPixels;
+        float width = bla.widthPixels;
+        float screenDiagonal = (float) Math.sqrt((Math.pow(height, 2)) + (Math.pow(width, 2)));
+        Log.d("DIAGONAL", String.valueOf(screenDiagonal));
+        if(screenDiagonal > NINE_INCH){
+            adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, classroomCodes);
+        }else{
+            adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, classroomCodes);
+        }
+
         classroomListView.setAdapter(adapter);
 
         classroomListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
