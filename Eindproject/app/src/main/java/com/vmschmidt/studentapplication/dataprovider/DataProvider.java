@@ -24,30 +24,10 @@ public class DataProvider {
 
     private static Map<String, Classroom> classrooms = null;
     private static HashMap<Integer, Student> studentNumbers = null;
-//    public static ArrayList<Classroom> classrooms = null;
 
-    public static void addStudentList(List<JSONObject> studentListToAdd) {
+    private static void addStudentList(List<JSONObject> studentListToAdd) {
 
         Log.d("TEST", "Current list size: " + studentListToAdd.size());
-
-//        try {
-//            for (JSONObject jsonObject : studentListToAdd) {
-//                Student newStudent = new Student(jsonObject);
-//                String newClassroomCode = newStudent.getClassroom();
-//                Classroom classroom = checkExistingClassroom(newClassroomCode);
-//                if(classroom == null){
-//                    Classroom newClassroom = new Classroom(newClassroomCode);
-//                    newClassroom.addStudent(newStudent);
-//                    classrooms.add(newClassroom);
-//                }else{
-//                    classroom.addStudent(newStudent);
-//                }
-//            }
-//            Log.d("CLASSROOMS", classrooms.toString());
-//        }catch (JSONException e){
-//            e.printStackTrace();
-//        }
-
         try {
             for(JSONObject jsonObject : studentListToAdd){
                 Student newStudent = new Student(jsonObject);
@@ -66,41 +46,6 @@ public class DataProvider {
         }catch(JSONException e){
             e.printStackTrace();
         }
-////
-//        for(JSONObject jsonObject : studentListToAdd){
-//            try{
-//                if(bla.isEmpty()) {
-//                    Student newStudent = new Student(jsonObject);
-//                    String classroomCode = jsonObject.getString("Classroom");
-//                    Classroom newClassroom = new Classroom(classroomCode);
-//                    newClassroom.addStudent(newStudent);
-//                    bla.add(newClassroom);
-//                }
-//                Iterator<Classroom> classroomIterator = bla.iterator();
-//                String classroomCode = jsonObject.getString("Classroom");
-//                boolean classRoomExists = false;
-//                Classroom existingClassroom = null;
-//                while(classroomIterator.hasNext()  && !classRoomExists){
-//                    existingClassroom = classroomIterator.next();
-//                    if(existingClassroom.getClassCode().equals(classroomCode)){
-//                        classRoomExists = true;
-//                    }
-//                }
-//                //Classroom newClassroom = new Classroom(classroomCode);
-//                Student newStudent = new Student(jsonObject);
-//                if(classRoomExists){
-//                    existingClassroom.addStudent(newStudent);
-//                }else{
-//                    existingClassroom = new Classroom(classroomCode);
-//                    existingClassroom.addStudent(newStudent);
-//                    bla.add(existingClassroom);
-//                }
-//                Log.d("ADD STUDENT", "Student " + newStudent.getFullName() + " added to " + classroomCode);
-//            }catch (JSONException e){
-//                e.printStackTrace();
-//                Log.d("JSONException", e.getMessage());
-//            }
-//        }
     }
 
     public static void addStudent(Student student){
@@ -183,7 +128,6 @@ public class DataProvider {
         while (scanner.hasNextLine()){
             stringBuilder.append(scanner.nextLine());
         }
-
         try{
             JSONArray jsonArray = new JSONArray(stringBuilder.toString());
             ArrayList<JSONObject> jsonObjects = new ArrayList<>();

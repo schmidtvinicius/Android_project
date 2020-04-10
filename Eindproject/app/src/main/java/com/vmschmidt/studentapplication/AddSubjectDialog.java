@@ -25,6 +25,7 @@ public class AddSubjectDialog extends DialogFragment {
 
     private AddSubjectDialogListener listener;
     private Student currentStudent;
+    private static final int MAX_SUBJECT_NAME_LENGTH = 40;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -60,7 +61,7 @@ public class AddSubjectDialog extends DialogFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.length() > 0){
-                    if(currentStudent.hasSubject(s.toString().trim())){
+                    if(currentStudent.hasSubject(s.toString().trim()) || s.toString().trim().length() > MAX_SUBJECT_NAME_LENGTH){
                         editTextSubject.setTextColor(Color.RED);
                     }else{
                         editTextSubject.setTextColor(Color.BLACK);
@@ -103,7 +104,13 @@ public class AddSubjectDialog extends DialogFragment {
                 }else if(editTextSubject.getCurrentTextColor() == Color.RED){
                     Toast.makeText(getContext(), R.string.toast_subject_already_exists, Toast.LENGTH_SHORT).show();
                 }else{
-                    listener.onAddSubjectDialogComplete(editTextSubject.getText().toString().trim(), Double.parseDouble(editTextGrade.getText().toString()));
+                    double grade;
+                    if(editTextGrade.getText().length() > 3){
+                        grade = Double.parseDouble(editTextGrade.getText().toString().substring(0, 3));
+                    }else{
+                        grade = Double.parseDouble(editTextGrade.getText().toString());
+                    }
+                    listener.onAddSubjectDialogComplete(editTextSubject.getText().toString().trim(), grade);
                     dismiss();
                 }
             }

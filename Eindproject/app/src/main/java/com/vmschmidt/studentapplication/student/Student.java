@@ -88,7 +88,7 @@ public class Student {
         return subjects.get(subjectName);
     }
 
-    public Set<String> getSubjects(){
+    public Set<String> getSubjectKeys(){
         return subjects.keySet();
     }
 

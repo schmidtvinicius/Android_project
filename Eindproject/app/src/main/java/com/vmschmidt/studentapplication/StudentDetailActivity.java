@@ -20,15 +20,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.vmschmidt.studentapplication.dataprovider.DataProvider;
 import com.vmschmidt.studentapplication.student.Student;
 
-public class StudentDetailActivity extends AppCompatActivity implements AddSubjectDialog.AddSubjectDialogListener {
+public class StudentDetailActivity extends AppCompatActivity  {
 
     public static final String EXTRA_FIRSTNAME = "firstname";
     public static final String EXTRA_MIDDLENAME = "middlename";
     public static final String EXTRA_LASTNAME = "lastname";
     public static final String EXTRA_CLASSROOM = "classroon";
-    public static final String EXTRA_FRIENDS_LIST = "friendslist";
-
-    public static final int ADD_FRIEND_REQUEST = 40;
 
     Intent startIntent;
 
@@ -117,19 +114,6 @@ public class StudentDetailActivity extends AppCompatActivity implements AddSubje
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu, menu);
-//        int orientation = this.getResources().getConfiguration().orientation;
-//        if(orientation == Configuration.ORIENTATION_LANDSCAPE){
-//            MenuItem mailOption = menu.add(R.string.option_mail);
-//            mailOption.setIcon(R.drawable.ic_email);
-//            mailOption.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-//            mailOption.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-//                @Override
-//                public boolean onMenuItemClick(MenuItem item) {
-//                    mailButton.callOnClick();
-//                    return false;
-//                }
-//            });
-//        }
         MenuItem deleteOption = menu.add(R.string.option_delete);
         deleteOption.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
@@ -156,19 +140,8 @@ public class StudentDetailActivity extends AppCompatActivity implements AddSubje
         cancelOption.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                resultCode = RESULT_CANCELED;
                 onBackPressed();
-                return false;
-            }
-        });
-        MenuItem addSubject = menu.add(R.string.option_add_subject);
-        addSubject.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                AddSubjectDialog addSubjectDialog = new AddSubjectDialog();
-                Bundle args = new Bundle();
-                args.putInt(StudentListActivity.EXTRA_STUDENT, studentNumber);
-                addSubjectDialog.setArguments(args);
-                addSubjectDialog.show(getSupportFragmentManager(), "ADDSUBJECT");
                 return false;
             }
         });
@@ -189,18 +162,22 @@ public class StudentDetailActivity extends AppCompatActivity implements AddSubje
     public void onBackPressed() {
         Intent resultIntent = new Intent();
         if(resultCode == RESULT_OK){
-            resultIntent.putExtra(EXTRA_FIRSTNAME, editTextFirstName.getText().toString().trim());
-            resultIntent.putExtra(EXTRA_MIDDLENAME, editTextMiddleName.getText().toString().trim());
-            resultIntent.putExtra(EXTRA_LASTNAME, editTextLastName.getText().toString().trim());
-            resultIntent.putExtra(EXTRA_CLASSROOM, editTextClassroom.getText().toString().trim());
+            if(editTextFirstName.getText().length() == 0){
+                Toast.makeText(this, R.string.toast_missing_name, Toast.LENGTH_SHORT).show();
+            }else{
+                resultIntent.putExtra(EXTRA_FIRSTNAME, editTextFirstName.getText().toString().trim());
+                resultIntent.putExtra(EXTRA_MIDDLENAME, editTextMiddleName.getText().toString().trim());
+                resultIntent.putExtra(EXTRA_LASTNAME, editTextLastName.getText().toString().trim());
+                resultIntent.putExtra(EXTRA_CLASSROOM, editTextClassroom.getText().toString().trim());
+                resultIntent.putExtra(StudentListActivity.EXTRA_STUDENT, studentNumber);
+                setResult(resultCode, resultIntent);
+                super.onBackPressed();
+            }
+        }else{
+            resultIntent.putExtra(StudentListActivity.EXTRA_STUDENT, studentNumber);
+            setResult(resultCode, resultIntent);
+            super.onBackPressed();
         }
-        resultIntent.putExtra(StudentListActivity.EXTRA_STUDENT, studentNumber);
-        setResult(resultCode, resultIntent);
-        super.onBackPressed();
-    }
 
-    @Override
-    public void onAddSubjectDialogComplete(String subjectName, double grade) {
-        student.addSubject(subjectName, grade);
     }
 }

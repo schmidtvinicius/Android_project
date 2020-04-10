@@ -17,10 +17,9 @@ import com.vmschmidt.studentapplication.dataprovider.DataProvider;
 import com.vmschmidt.studentapplication.student.Student;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Set;
 
-public class SubjectsListActivity extends AppCompatActivity implements EditSubjectDialog.EditSubjectDialogListener {
+public class SubjectsListActivity extends AppCompatActivity implements EditSubjectDialog.EditSubjectDialogListener, AddSubjectDialog.AddSubjectDialogListener {
 
     private Student currentStudent;
     private int studentNumber;
@@ -76,6 +75,18 @@ public class SubjectsListActivity extends AppCompatActivity implements EditSubje
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu, menu);
+        MenuItem addSubject = menu.add(R.string.option_add_subject);
+        addSubject.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                AddSubjectDialog addSubjectDialog = new AddSubjectDialog();
+                Bundle args = new Bundle();
+                args.putInt(StudentListActivity.EXTRA_STUDENT, studentNumber);
+                addSubjectDialog.setArguments(args);
+                addSubjectDialog.show(getSupportFragmentManager(), "ADDSUBJECT");
+                return false;
+            }
+        });
         MenuItem analyzeGrades = menu.add(R.string.option_analyze_grades);
         analyzeGrades.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
@@ -93,7 +104,7 @@ public class SubjectsListActivity extends AppCompatActivity implements EditSubje
         if(subjectNames == null){
             subjectNames = new ArrayList<>();
         }
-        subjects = currentStudent.getSubjects();
+        subjects = currentStudent.getSubjectKeys();
         subjectNames.clear();
         subjectNames.addAll(subjects);
     }
@@ -105,6 +116,13 @@ public class SubjectsListActivity extends AppCompatActivity implements EditSubje
         }else{
             currentStudent.setGrade(subjectName, grade);
         }
+        updateSubjects();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onAddSubjectDialogComplete(String subjectName, double grade) {
+        currentStudent.addSubject(subjectName, grade);
         updateSubjects();
         adapter.notifyDataSetChanged();
     }

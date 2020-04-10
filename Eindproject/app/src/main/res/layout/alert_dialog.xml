@@ -28,6 +28,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:text="@string/option_cancel"
+        android:textAlignment="viewStart"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,12 +39,12 @@
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:layout_marginBottom="16dp"
         android:text="@string/option_confirm"
+        android:textAlignment="viewStart"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/btn_cancel_deletion"
         app:layout_constraintTop_toBottomOf="@+id/btn_cancel_deletion" />
 </androidx.constraintlayout.widget.ConstraintLayout>

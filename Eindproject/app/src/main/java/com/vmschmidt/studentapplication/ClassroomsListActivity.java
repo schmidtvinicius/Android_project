@@ -42,10 +42,10 @@ public class ClassroomsListActivity extends AppCompatActivity implements CreateC
 
         ListView classroomListView = findViewById(R.id.classroms_list);
 
-        DisplayMetrics bla = getResources().getDisplayMetrics();
-        float height = bla.heightPixels;
-        float width = bla.widthPixels;
-        float screenDiagonal = (float) Math.sqrt((Math.pow(height, 2)) + (Math.pow(width, 2)));
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        float displayHeight = displayMetrics.heightPixels;
+        float displayWidth = displayMetrics.widthPixels;
+        float screenDiagonal = (float) Math.sqrt((Math.pow(displayHeight, 2)) + (Math.pow(displayWidth, 2)));
         Log.d("DIAGONAL", String.valueOf(screenDiagonal));
         if(screenDiagonal > NINE_INCH){
             adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, classroomCodes);
@@ -87,8 +87,8 @@ public class ClassroomsListActivity extends AppCompatActivity implements CreateC
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu, menu);
-        MenuItem addOption = menu.add(R.string.option_add);
-        addOption.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        MenuItem addClassroomOption = menu.add(R.string.option_add);
+        addClassroomOption.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 CreateClassroomDialog dialog = CreateClassroomDialog.newInstance(classroomCodes,currentRegex);

@@ -16,7 +16,7 @@
     <string name="toast_cannot_alter_class">O estudante só pode ser adicionado à classe atual!</string>
     <string name="toast_cannot_edit_email">O endereço de e-mail é gerado com base no número do estudante!</string>
     <string name="toast_invalid_studentnumber">O número de estudante inserido é inválido, ou já está em uso!</string>
-    <string name="toast_missing_name">O estudante precisa de um primeiro nome para poder ser criado!</string>
+    <string name="toast_missing_name">O estudante precisa de um primeiro nome!</string>
     <string name="option_cancel">Cancelar</string>
     <string name="option_confirm">Confirmar</string>
     <string name="create_classroom">Insira o novo código da turma</string>

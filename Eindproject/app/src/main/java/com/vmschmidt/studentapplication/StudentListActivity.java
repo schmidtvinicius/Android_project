@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.Menu;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.vmschmidt.studentapplication.classroom.Classroom;
 import com.vmschmidt.studentapplication.dataprovider.DataProvider;
 import com.vmschmidt.studentapplication.student.Student;
@@ -26,8 +28,9 @@ public class StudentListActivity extends AppCompatActivity implements AlertDialo
     private StudentAdapter studentAdapter;
     private int resultCode;
     private Student selectedStudent;
+    private FloatingActionButton mailButton;
 
-    public static final String EXTRA_STUDENT = "studentPosition";
+    public static final String EXTRA_STUDENT = "studentnumber";
     public static final int RESULT_DELETED = -2;
     public static final int VIEW_STUDENT_REQUEST = 20;
     public static final int ADD_STUDENT_REQUEST = 30;
@@ -59,22 +62,22 @@ public class StudentListActivity extends AppCompatActivity implements AlertDialo
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu, menu);
-        MenuItem deleteOption = menu.add(Menu.NONE, Menu.NONE, 101, R.string.option_delete);
-        deleteOption.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                AlertDialogFragment dialogFragment = new AlertDialogFragment();
-                dialogFragment.show(getSupportFragmentManager(), "ALERT");
-                return false;
-            }
-        });
-        MenuItem addOption = menu.add(Menu.NONE, Menu.NONE, 100, R.string.option_add);
+        MenuItem addOption = menu.add(R.string.option_add);
         addOption.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 Intent addStudentIntent = new Intent(StudentListActivity.this, CreateStudentActivity.class);
                 addStudentIntent.putExtra(ClassroomsListActivity.EXTRA_CLASSROOM, classroomCode);
                 startActivityForResult(addStudentIntent, ADD_STUDENT_REQUEST);
+                return false;
+            }
+        });
+        MenuItem deleteOption = menu.add(R.string.option_delete);
+        deleteOption.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                AlertDialogFragment dialogFragment = new AlertDialogFragment();
+                dialogFragment.show(getSupportFragmentManager(), "ALERT");
                 return false;
             }
         });

@@ -14,9 +14,9 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_REGEX = "regex";
-    public static final String REGEX_SOFTWARE = "^EHI1V.S[a-z]$";
-    public static final String REGEX_BUSINESS = "^EHI1V.B[a-z]$";
-    public static final String REGEX_ITSM = "^EHI1V.I[a-z]$";
+    public static final String REGEX_SOFTWARE = "^EHI[1-4]V.S[a-z]$";
+    public static final String REGEX_BUSINESS = "^EHI[1-4]V.B[a-z]$";
+    public static final String REGEX_ITSM = "^EHI[1-4]V.I[a-z]$";
 
     public static final String COURSE_SOFTWARE_ENGINEERING = "Software Engineering";
     public static final String COURSE_BUSINESS = "Business";

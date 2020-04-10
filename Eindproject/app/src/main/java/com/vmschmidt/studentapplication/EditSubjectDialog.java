@@ -91,7 +91,13 @@ public class EditSubjectDialog extends DialogFragment{
                 if(editTextGrade.getCurrentTextColor() == Color.RED || editTextGrade.getText().length() == 0){
                     Toast.makeText(getContext(), R.string.toast_invalid_grade, Toast.LENGTH_SHORT).show();
                 }else{
-                    listener.onEditSubjectDialogComplete(false, textViewSubject.getText().toString(), Double.parseDouble(editTextGrade.getText().toString()));
+                    double grade;
+                    if(editTextGrade.getText().length() > 3){
+                        grade = Double.parseDouble(editTextGrade.getText().toString().substring(0, 3));
+                    }else{
+                        grade = Double.parseDouble(editTextGrade.getText().toString());
+                    }
+                    listener.onEditSubjectDialogComplete(false, textViewSubject.getText().toString(), grade);
                     dismiss();
                 }
             }
