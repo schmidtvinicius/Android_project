@@ -23,7 +23,7 @@ import java.util.Set;
 public class DataProvider {
 
     private static Map<String, Classroom> classrooms = null;
-    private static HashMap<Integer, Student> studentNumbers = null;
+    private static Map<Integer, Student> studentNumbers = null;
 
     private static void addStudentList(List<JSONObject> studentListToAdd) {
 
@@ -85,16 +85,6 @@ public class DataProvider {
         Classroom classroom = classrooms.get(classroomCode);
         classroom.removeStudent(student);
         studentNumbers.remove(student.getStudentNumber());
-    }
-
-    public static Classroom checkExistingClassroom(String codeToCheck){
-
-        for(String classroomCode : classrooms.keySet()){
-            if(classroomCode.equals(codeToCheck)){
-                return classrooms.get(classroomCode);
-            }
-        }
-        return null;
     }
 
     public static Set<String> getClassroomsKeys(Context context){

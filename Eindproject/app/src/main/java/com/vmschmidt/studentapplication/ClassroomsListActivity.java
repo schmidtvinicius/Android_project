@@ -92,7 +92,7 @@ public class ClassroomsListActivity extends AppCompatActivity implements CreateC
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 CreateClassroomDialog dialog = CreateClassroomDialog.newInstance(classroomCodes,currentRegex);
-                dialog.show(getSupportFragmentManager(), "BLA");
+                dialog.show(getSupportFragmentManager(), "CREATECLASSROOM");
                 return false;
             }
         });

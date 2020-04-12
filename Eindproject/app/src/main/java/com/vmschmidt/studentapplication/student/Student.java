@@ -1,12 +1,8 @@
 package com.vmschmidt.studentapplication.student;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -115,26 +111,6 @@ public class Student {
     public void removeSubject(String subjectName){
         subjects.remove(subjectName);
     }
-
-    public JSONObject toJSONObject() throws JSONException {
-
-        JSONObject jsonObject = new JSONObject();
-
-        jsonObject.put("First Name", this.firstName);
-        jsonObject.put("Middle Name", this.middleName);
-        jsonObject.put("Last Name", this.lastName);
-        jsonObject.put("Student Number", this.studentNumber);
-        jsonObject.put("E-mail Address", this.emailAddress);
-        jsonObject.put("Classroom", this.classroom);
-
-        return jsonObject;
-    }
-
-//    @Override
-//    public String toString(){
-//        return "\n\n" + getFullName() + ":" + "\n\tStudent number: " + this.studentNumber + "\n\tE-mail address: " + this.emailAddress +
-//                "\n\tClass: " + getClassroom();
-//    }
 
 }
 

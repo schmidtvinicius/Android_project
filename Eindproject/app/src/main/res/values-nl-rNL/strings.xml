@@ -8,7 +8,7 @@
     <string name="hint_classroomcode">Klas code</string>
     <string name="hint_studentnumber">Studentennummer</string>
     <string name="toast_unique_student_value">Dit is een unieke gegeven voor deze student en kan niet aangepast worden!</string>
-    <string name="toast_classroom_invalid">De klas code is niet geldig en wordt dus niet veranderd!</string>
+    <string name="toast_classroom_invalid">De klas code is niet geldig!</string>
     <string name="option_add">Toevoegen</string>
     <string name="option_delete">Verwijderen</string>
     <string name="option_search">Zoeken</string>

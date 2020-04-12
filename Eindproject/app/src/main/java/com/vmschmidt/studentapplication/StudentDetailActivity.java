@@ -20,6 +20,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.vmschmidt.studentapplication.dataprovider.DataProvider;
 import com.vmschmidt.studentapplication.student.Student;
 
+import java.util.Set;
+
 public class StudentDetailActivity extends AppCompatActivity  {
 
     public static final String EXTRA_FIRSTNAME = "firstname";
@@ -31,16 +33,16 @@ public class StudentDetailActivity extends AppCompatActivity  {
 
     private int resultCode;
 
-    EditText editTextFirstName;
-    EditText editTextMiddleName;
-    EditText editTextLastName;
-    EditText editTextEmail;
-    EditText editTextClassroom;
-    EditText editTextStudentNumber;
-    FloatingActionButton mailButton;
-    Student student;
-    int studentNumber;
-    String classroomCode;
+    private EditText editTextFirstName;
+    private EditText editTextMiddleName;
+    private EditText editTextLastName;
+    private EditText editTextEmail;
+    private EditText editTextClassroom;
+    private EditText editTextStudentNumber;
+    private FloatingActionButton mailButton;
+    private Student student;
+    private int studentNumber;
+    private Set<String> existingClassrooms;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +59,13 @@ public class StudentDetailActivity extends AppCompatActivity  {
             }
         });
 
+        existingClassrooms = DataProvider.getClassroomsKeys(this);
+
+        resultCode = RESULT_CANCELED;
+
         startIntent = getIntent();
         studentNumber = startIntent.getIntExtra(StudentListActivity.EXTRA_STUDENT, -1);
         student = DataProvider.findStudent(studentNumber);
-        classroomCode = student.getClassroom();
 
         editTextFirstName = findViewById(R.id.editText_firstname);
         editTextMiddleName = findViewById(R.id.editText_middlename);
@@ -99,16 +104,15 @@ public class StudentDetailActivity extends AppCompatActivity  {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!s.toString().trim().matches("^EHI1V.([BI][ab]|S[a-d])$")){
-                    editTextClassroom.setTextColor(Color.RED);
-
-                }else{
-                    editTextClassroom.setTextColor(Color.BLACK);
+                if(s.length() > 0){
+                    if(!existingClassrooms.contains(s.toString())){
+                        editTextClassroom.setTextColor(Color.RED);
+                    }else{
+                        editTextClassroom.setTextColor(Color.BLACK);
+                    }
                 }
             }
         });
-
-
     }
 
     @Override
@@ -164,6 +168,8 @@ public class StudentDetailActivity extends AppCompatActivity  {
         if(resultCode == RESULT_OK){
             if(editTextFirstName.getText().length() == 0){
                 Toast.makeText(this, R.string.toast_missing_name, Toast.LENGTH_SHORT).show();
+            }else if(editTextClassroom.getText().length() == 0 || editTextClassroom.getCurrentTextColor() == Color.RED){
+                Toast.makeText(this, R.string.toast_classroom_invalid, Toast.LENGTH_SHORT).show();
             }else{
                 resultIntent.putExtra(EXTRA_FIRSTNAME, editTextFirstName.getText().toString().trim());
                 resultIntent.putExtra(EXTRA_MIDDLENAME, editTextMiddleName.getText().toString().trim());

@@ -8,7 +8,7 @@
     <string name="hint_classroomcode">Código da turma</string>
     <string name="hint_studentnumber">Número do estudante</string>
     <string name="toast_unique_student_value">Este é um dado único desse estudante e não pode ser alterado!</string>
-    <string name="toast_classroom_invalid">O código da turma não é um válido e não será alterado!</string>
+    <string name="toast_classroom_invalid">O código da turma não é um válido!</string>
     <string name="option_add">Adicionar</string>
     <string name="option_delete">Deletar</string>
     <string name="option_search">Procurar</string>

@@ -112,10 +112,10 @@ public class StudentListActivity extends AppCompatActivity implements AlertDialo
                     }
                     student.setLastName(newLastName);
                 }
-                if(newClassroomCode.matches("^EHI1V.([BI][ab]|S[a-d])$") && !newClassroomCode.equals(student.getClassroom())){
-                    Classroom newClassroom = DataProvider.checkExistingClassroom(newClassroomCode);
+                if(!newClassroomCode.equals(student.getClassroom())){
+                    Classroom newClassroom = DataProvider.getClassroom(newClassroomCode);
                     if(newClassroom != null){
-                        DataProvider.getClassroom(classroomCode).getStudentList().remove(student);
+                        DataProvider.getClassroom(classroomCode).removeStudent(student);
                         newClassroom.addStudent(student);
                     }
                     student.setClassroom(newClassroomCode);

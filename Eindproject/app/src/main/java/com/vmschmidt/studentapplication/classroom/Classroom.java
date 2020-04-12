@@ -27,26 +27,10 @@ public class Classroom {
         return studentList.add(student);
     }
 
-    public void deleteStudentList(){
-        studentList.removeAll(studentList);
-        studentList = null;
-    }
-
     public void removeStudent(Student student){
         studentList.remove(student);
         Log.d("STUDENT", student.toString());
         Log.d("ARRAYLIST", studentList.toString());
-    }
-
-    public int totalStudents(){
-        if(studentList != null){
-            return studentList.size();
-        }
-        return 0;
-    }
-
-    public void addStudentList(ArrayList<Student> studentsToAdd){
-        this.studentList.addAll(studentsToAdd);
     }
 
     public String getClassCode(){

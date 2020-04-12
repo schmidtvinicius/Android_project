@@ -7,7 +7,7 @@
     <string name="hint_classroomcode">Classroom code</string>
     <string name="hint_studentnumber">Student number</string>
     <string name="toast_unique_student_value">This is an unique data for this student and cannot be altered!</string>
-    <string name="toast_classroom_invalid">The classroom code is not valid and will not be changed!</string>
+    <string name="toast_classroom_invalid">The classroom code is not valid!</string>
     <string name="option_delete">Delete</string>
     <string name="option_add">Add</string>
     <string name="option_search">Search</string>
