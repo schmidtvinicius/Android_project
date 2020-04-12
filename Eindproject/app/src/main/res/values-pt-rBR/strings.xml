@@ -35,4 +35,5 @@
     <string name="option_sector_graphic">Gráfico de setor</string>
     <string name="option_bar_graphic">Gráfico de barra</string>
     <string name="option_analyze_courses">Analisar cursos</string>
+    <string name="total_students">Total de estudantes</string>
 </resources>

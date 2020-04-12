@@ -117,6 +117,10 @@ public class CoursesGraphic extends View {
         return percentageBusiness;
     }
 
+    public int getTotalStudents() {
+        return totalStudents;
+    }
+
     public Paint getPaintSE() {
         return paintSE;
     }

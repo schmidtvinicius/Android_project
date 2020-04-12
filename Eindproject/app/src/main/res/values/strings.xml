@@ -34,4 +34,5 @@
     <string name="option_sector_graphic">Sector graphic</string>
     <string name="option_bar_graphic">Bar graphic</string>
     <string name="option_analyze_courses">Analyze courses</string>
+    <string name="total_students">Total students</string>
 </resources>

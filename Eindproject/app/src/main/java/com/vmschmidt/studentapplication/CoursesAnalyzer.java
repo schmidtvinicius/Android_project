@@ -44,6 +44,7 @@ public class CoursesAnalyzer extends ConstraintLayout {
         TextView textViewSE = findViewById(R.id.textView_software_percentage);
         TextView textViewBusiness = findViewById(R.id.textView_business_percentage);
         TextView textViewITSM = findViewById(R.id.textView_itsm_percentage);
+        TextView textViewTotalStudents = findViewById(R.id.textView_totalStudents);
 
         allStudents = DataProvider.getStudentKeys(this.getContext());
 
@@ -56,6 +57,7 @@ public class CoursesAnalyzer extends ConstraintLayout {
         textViewSE.setText(MainActivity.COURSE_SOFTWARE_ENGINEERING + ": " + (coursesGraphic.getPercentageSE() * 100) + "%.");
         textViewBusiness.setText(MainActivity.COURSE_BUSINESS + ": " + (coursesGraphic.getPercentageBusiness() * 100) + "%.");
         textViewITSM.setText(MainActivity.COURSE_ITSM + ": " + (coursesGraphic.getPercentageITSM() * 100) + "%.");
+        textViewTotalStudents.append(": " + String.valueOf(coursesGraphic.getTotalStudents()));
 
         sectorOption.setChecked(true);
 
