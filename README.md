@@ -1,37 +1,10 @@
-## Welcome to GitHub Pages
+## Student Application
 
-You can use the [editor on GitHub](https://github.com/schmidtvinicius/Android_project/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+This was the first Android project I developed during my first year of school. The objective of this application is to manage the HBO-ICT students at Saxion University of Applied Sciences. The app is devided into three main courses: 'Software Engineering', 'Business' and 'ITSM'. Each course has a list of classrooms and each classroom has a list of students. Each student has its own list of subjects where they can add or delete subjects and the corresponding grades for each subject. Furthermore the user can visualize the percentage of students that follows each course.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Things I've learned with this project:
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/schmidtvinicius/Android_project/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+* How to work with multiple activities and pass data from one activity to another;
+* How to create my own compound controls to add custom behavior to my application;
+* How to make custom and dynamic custom drawings that adapt to the current state of the application data model;
+* How to create custom dialog fragments to receive input from the user;
